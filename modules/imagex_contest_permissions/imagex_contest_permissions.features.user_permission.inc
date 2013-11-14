@@ -62,14 +62,22 @@ function imagex_contest_permissions_user_default_permissions() {
   // Exported permission: 'create contest content'.
   $permissions['create contest content'] = array(
     'name' => 'create contest content',
-    'roles' => array(),
+    'roles' => array(
+      'Administrator' => 'Administrator',
+      'Content Administrator' => 'Content Administrator',
+      'Content Creator' => 'Content Creator',
+      'Content Manager' => 'Content Manager',
+      'Content Moderator' => 'Content Moderator',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: 'create contest_entry content'.
   $permissions['create contest_entry content'] = array(
     'name' => 'create contest_entry content',
-    'roles' => array(),
+    'roles' => array(
+      'authenticated user' => 'authenticated user',
+    ),
     'module' => 'node',
   );
 
@@ -83,49 +91,84 @@ function imagex_contest_permissions_user_default_permissions() {
   // Exported permission: 'delete any contest_entry content'.
   $permissions['delete any contest_entry content'] = array(
     'name' => 'delete any contest_entry content',
-    'roles' => array(),
+    'roles' => array(
+      'Administrator' => 'Administrator',
+      'Content Administrator' => 'Content Administrator',
+      'Content Manager' => 'Content Manager',
+      'Content Moderator' => 'Content Moderator',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: 'delete own contest content'.
   $permissions['delete own contest content'] = array(
     'name' => 'delete own contest content',
-    'roles' => array(),
+    'roles' => array(
+      'Administrator' => 'Administrator',
+      'Content Administrator' => 'Content Administrator',
+      'Content Manager' => 'Content Manager',
+      'Content Moderator' => 'Content Moderator',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: 'delete own contest_entry content'.
   $permissions['delete own contest_entry content'] = array(
     'name' => 'delete own contest_entry content',
-    'roles' => array(),
+    'roles' => array(
+      'Administrator' => 'Administrator',
+      'Content Administrator' => 'Content Administrator',
+      'Content Creator' => 'Content Creator',
+      'Content Manager' => 'Content Manager',
+      'Content Moderator' => 'Content Moderator',
+      'authenticated user' => 'authenticated user',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: 'edit any contest content'.
   $permissions['edit any contest content'] = array(
     'name' => 'edit any contest content',
-    'roles' => array(),
+    'roles' => array(
+      'Administrator' => 'Administrator',
+      'Content Administrator' => 'Content Administrator',
+      'Content Manager' => 'Content Manager',
+      'Content Moderator' => 'Content Moderator',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: 'edit any contest_entry content'.
   $permissions['edit any contest_entry content'] = array(
     'name' => 'edit any contest_entry content',
-    'roles' => array(),
+    'roles' => array(
+      'Administrator' => 'Administrator',
+      'Content Administrator' => 'Content Administrator',
+      'Content Manager' => 'Content Manager',
+      'Content Moderator' => 'Content Moderator',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: 'edit own contest content'.
   $permissions['edit own contest content'] = array(
     'name' => 'edit own contest content',
-    'roles' => array(),
+    'roles' => array(
+      'Administrator' => 'Administrator',
+      'Content Administrator' => 'Content Administrator',
+      'Content Creator' => 'Content Creator',
+      'Content Manager' => 'Content Manager',
+      'Content Moderator' => 'Content Moderator',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: 'edit own contest_entry content'.
   $permissions['edit own contest_entry content'] = array(
     'name' => 'edit own contest_entry content',
-    'roles' => array(),
+    'roles' => array(
+      'authenticated user' => 'authenticated user',
+    ),
     'module' => 'node',
   );
 
