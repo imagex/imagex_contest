@@ -1,0 +1,50 @@
+<?php
+/**
+ * @file
+ * Code for the Imagex Contest feature.
+ */
+
+include_once 'imagex_contest.features.inc';
+
+
+/**
+ * Implements hook_node_view().
+ */
+function imagex_contest_node_view($node, $view_mode, $langcode) {
+  if (imagex_contest_contest_entry_access($node)) {
+    $links['imagex_contest_add_entry'] = array(
+      'title' => t('Submit Your Entry Now'),
+      'href' => 'node/add/contest-entry',
+      'query' => array('field_contest_entry_contest' => $node->nid) + drupal_get_destination(),
+      'attributes' => array(
+        'title' => t('Submit your entry into this contest now!'),
+        'class' => array('imagex-contest-add-entry'),
+      ),
+    );    
+    
+    $node->content['links']['imagex_contest_add_entry'] = array(
+      '#theme' => 'links__imagex_contest_add_entry',
+      '#links' => $links,
+      '#attributes' => array('class' => array('links', 'inline')),
+    );
+  }
+}
+
+/**
+ * Determines if a contest is open to entries & global has access
+ */
+function imagex_contest_contest_entry_access($node) {
+  // User access
+  if (!user_access('create contest entry content')) {
+    return FALSE;
+  }
+  
+  // Contest is open to entries
+  $node_wrapper = entity_metadata_wrapper('node', $node);
+  $content_open_entry = $node_wrapper->field_contest_entry_open->value();
+  if (empty($content_open_entry)) {
+    return FALSE;
+  }
+  
+  return TRUE;
+}
