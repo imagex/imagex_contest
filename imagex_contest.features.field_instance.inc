@@ -433,10 +433,10 @@ If a deadline date is entered the "Open To Entries" checkbox will automatically 
         'allowed_formats' => array(
           'filtered_html' => 'filtered_html',
           'full_html' => 'full_html',
-          'message' => 'message',
+          'message' => 0,
           'plain_text' => 'plain_text',
         ),
-        'allowed_formats_toggle' => 0,
+        'allowed_formats_toggle' => 1,
         'default_order_toggle' => 0,
         'default_order_wrapper' => array(
           'formats' => array(
@@ -455,7 +455,7 @@ If a deadline date is entered the "Open To Entries" checkbox will automatically 
           ),
         ),
       ),
-      'text_processing' => 0,
+      'text_processing' => 1,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -757,8 +757,8 @@ If a deadline date is entered the "Open For Voting" checkbox will automatically 
       'behaviors' => array(
         'prepopulate' => array(
           'action' => 'hide',
-          'action_on_edit' => 1,
-          'fallback' => 'none',
+          'action_on_edit' => 0,
+          'fallback' => 'redirect',
           'og_context' => 0,
           'skip_perm' => 'administer nodes',
           'status' => 1,
