@@ -43,12 +43,7 @@ function imagex_contest_form_contest_entry_node_form_alter(&$form, &$form_state,
     );
     
     // Rules is required field so should be present
-    if (!empty($contest_rules)) {
-      // Attach .css file to make rules scrollable
-      $form['#attached']['css'] = array(
-        drupal_get_path('module', 'imagex_contest') . '/imagex_contest.admin.css',
-      );
-      
+    if (!empty($contest_rules)) {      
       // Display rules as markup
       $form['imagex_contest_rules']['imagex_contest_rules_view'] = array(
         '#type' => 'item',
