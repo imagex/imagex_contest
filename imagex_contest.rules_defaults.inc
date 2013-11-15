@@ -73,7 +73,7 @@ function imagex_contest_default_rules_configuration() {
       ]
     }
   }');
-  $items['rules_imagex_contest_entry_deadline_passed'] = entity_import('rules_config', '{ "rules_imagex_contest_entry_deadline_passed" : {
+  $items['rules_imagex_contest_entry_deadline'] = entity_import('rules_config', '{ "rules_imagex_contest_entry_deadline" : {
       "LABEL" : "ImageX Contest Entry Deadline",
       "PLUGIN" : "reaction rule",
       "TAGS" : [ "imagex_contest" ],
