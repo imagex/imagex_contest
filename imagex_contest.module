@@ -69,19 +69,31 @@ function imagex_contest_form_contest_entry_node_form_alter(&$form, &$form_state,
  * Returns links array based on access
  */
 function imagex_contest_contest_entry_links($node) {
+  global $user;
   $links = array();
   
   // User access
-  if (!user_access('create contest entry content')) {
+  if (!$user->uid) {
     $links['imagex_contest_add_entry_noaccess'] = array(
       'title' => t('<a href="@login">Log in</a> or <a href="@register">register</a> to submit an entry to this contest.', array('@login' => url('user/login', array('query' => drupal_get_destination())), '@register' => url('user/register', array('query' => drupal_get_destination())))),
       'html' => TRUE,
       'attributes' => array(
         'title' => t('Log in or register to submit an entry to this contest.'),
-        'class' => array('imagex-contest-add-entry-noaccess'),
+        'class' => array('imagex-contest-add-entry-anonymous'),
       ),
     );
   }
+  
+  // Logged but no access
+  if ($user->uid && !user_access('create contest_entry content')) {
+    $links['imagex_contest_add_entry_noaccess'] = array(
+      'title' => t('You do not have sufficient permissions to submit an entry to this contest.'),
+      'html' => TRUE,
+      'attributes' => array(
+        'class' => array('imagex-contest-add-entry-noaccess'),
+      ),
+    );
+  }  
   
   // Contest is no longer open to entries
   $node_wrapper = entity_metadata_wrapper('node', $node);
