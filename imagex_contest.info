@@ -22,6 +22,7 @@ dependencies[] = rules_scheduler
 dependencies[] = strongarm
 dependencies[] = text
 dependencies[] = views
+dependencies[] = views_bulk_operations
 dependencies[] = views_content
 features[conditional_fields][] = node:contest
 features[ctools][] = page_manager:pages_default:1
