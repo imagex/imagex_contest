@@ -11,7 +11,7 @@ include_once 'imagex_contest.features.inc';
  * Implements hook_node_view().
  */
 function imagex_contest_node_view($node, $view_mode, $langcode) {
-  if ($links = imagex_contest_contest_entry_links($node)) {    
+  if ($node->type == 'contest' && $links = imagex_contest_contest_entry_links($node)) {    
     $node->content['links']['imagex_contest_add_entry'] = array(
       '#theme' => 'links__imagex_contest_add_entry',
       '#links' => $links,

@@ -609,13 +609,13 @@ If a deadline date is entered the "Open For Voting" checkbox will automatically 
     'default_value' => NULL,
     'default_value_function' => 'entityreference_prepopulate_field_default_value',
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Admin only field.',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'module' => 'entityreference',
         'settings' => array(
-          'link' => FALSE,
+          'link' => 1,
         ),
         'type' => 'entityreference_label',
         'weight' => 2,
@@ -739,7 +739,7 @@ If a deadline date is entered the "Open For Voting" checkbox will automatically 
     'bundle' => 'contest_entry',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Admin only field.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -781,6 +781,7 @@ If a deadline date is entered the "Open For Voting" checkbox will automatically 
   // Translatables
   // Included for use with string extractors like potx.
   t('A brief description or summary of your entry. ');
+  t('Admin only field.');
   t('Comment');
   t('Description');
   t('Determines if users can submit entries to this contest.');
