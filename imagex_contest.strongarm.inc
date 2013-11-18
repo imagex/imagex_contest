@@ -232,13 +232,13 @@ function imagex_contest_strongarm() {
           'weight' => '0',
         ),
         'path' => array(
-          'weight' => '6',
+          'weight' => '7',
         ),
         'redirect' => array(
-          'weight' => '5',
+          'weight' => '6',
         ),
         'workbench_access' => array(
-          'weight' => '4',
+          'weight' => '5',
         ),
       ),
       'display' => array(),
