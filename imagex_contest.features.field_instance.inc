@@ -267,64 +267,6 @@ If a deadline date is entered the "Open To Entries" checkbox will automatically 
     'workbench_access_field' => 0,
   );
 
-  // Exported field_instance: 'node-contest-field_contest_finalists'
-  $field_instances['node-contest-field_contest_finalists'] = array(
-    'bundle' => 'contest',
-    'default_value' => NULL,
-    'default_value_function' => '',
-    'deleted' => 0,
-    'description' => 'The Contest Entries which have been selected as finalists. Other users may vote for these entries on this contest.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'entityreference',
-        'settings' => array(
-          'link' => FALSE,
-        ),
-        'type' => 'entityreference_label',
-        'weight' => 6,
-      ),
-      'search_result_search_api' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_contest_finalists',
-    'label' => 'Finalists',
-    'required' => 0,
-    'settings' => array(
-      'behaviors' => array(
-        'prepopulate' => array(
-          'status' => 0,
-        ),
-      ),
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'inline_entity_form',
-      'settings' => array(
-        'fields' => array(),
-        'match_operator' => 'CONTAINS',
-        'path' => '',
-        'size' => 60,
-        'type_settings' => array(),
-      ),
-      'type' => 'inline_entity_form',
-      'weight' => 8,
-    ),
-    'workbench_access_field' => 0,
-  );
-
   // Exported field_instance: 'node-contest-field_contest_media'
   $field_instances['node-contest-field_contest_media'] = array(
     'bundle' => 'contest',
@@ -583,64 +525,6 @@ If a deadline date is entered the "Open For Voting" checkbox will automatically 
     'workbench_access_field' => 0,
   );
 
-  // Exported field_instance: 'node-contest-field_contest_winners'
-  $field_instances['node-contest-field_contest_winners'] = array(
-    'bundle' => 'contest',
-    'default_value' => NULL,
-    'default_value_function' => '',
-    'deleted' => 0,
-    'description' => 'The winning entry or entries to be selected after voting on the contest has finished.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'entityreference',
-        'settings' => array(
-          'link' => FALSE,
-        ),
-        'type' => 'entityreference_label',
-        'weight' => 5,
-      ),
-      'search_result_search_api' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_contest_winners',
-    'label' => 'Winners',
-    'required' => 0,
-    'settings' => array(
-      'behaviors' => array(
-        'prepopulate' => array(
-          'status' => 0,
-        ),
-      ),
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'inline_entity_form',
-      'settings' => array(
-        'fields' => array(),
-        'match_operator' => 'CONTAINS',
-        'path' => '',
-        'size' => 60,
-        'type_settings' => array(),
-      ),
-      'type' => 'inline_entity_form',
-      'weight' => 9,
-    ),
-    'workbench_access_field' => 0,
-  );
-
   // Exported field_instance: 'node-contest_entry-body'
   $field_instances['node-contest_entry-body'] = array(
     'bundle' => 'contest_entry',
@@ -725,13 +609,13 @@ If a deadline date is entered the "Open For Voting" checkbox will automatically 
     'default_value' => NULL,
     'default_value_function' => 'entityreference_prepopulate_field_default_value',
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Admin only field.',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'module' => 'entityreference',
         'settings' => array(
-          'link' => FALSE,
+          'link' => 1,
         ),
         'type' => 'entityreference_label',
         'weight' => 2,
@@ -850,21 +734,65 @@ If a deadline date is entered the "Open For Voting" checkbox will automatically 
     'workbench_access_field' => 0,
   );
 
+  // Exported field_instance: 'node-contest_entry-field_contest_entry_status'
+  $field_instances['node-contest_entry-field_contest_entry_status'] = array(
+    'bundle' => 'contest_entry',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Admin only field.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 3,
+      ),
+      'search_result_search_api' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_contest_entry_status',
+    'label' => 'Status',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 4,
+    ),
+    'workbench_access_field' => 0,
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
   t('A brief description or summary of your entry. ');
+  t('Admin only field.');
   t('Comment');
   t('Description');
   t('Determines if users can submit entries to this contest.');
   t('Determines if users can vote on entries in this contest. Voting widgets will only show when this field is checked and "finalist" entries have been selected.');
   t('Entry Deadline');
-  t('Finalists');
   t('Media');
   t('Open For Entries');
   t('Open For Voting');
   t('Related Contest');
   t('Rules');
-  t('The Contest Entries which have been selected as finalists. Other users may vote for these entries on this contest.');
+  t('Status');
   t('The contest rules a user submitting a contest entry must agree to follow.');
   t('The date when users can no longer enter this contest.<br />
 If left blank it\'s assume the contest will be ongoing until it is manually closed via the "Open To Entries" checkbox.<br />
@@ -872,10 +800,8 @@ If a deadline date is entered the "Open To Entries" checkbox will automatically 
   t('The date when users can no longer vote on entries submitted to this contest.<br />
 If left blank it\'s assume the contest will be ongoing until it is manually closed via the "Open For Voting" checkbox.<br />
 If a deadline date is entered the "Open For Voting" checkbox will automatically unchecked when the deadline date is passed.');
-  t('The winning entry or entries to be selected after voting on the contest has finished.');
   t('Upload or reference to any media or files related to your entry.');
   t('Voting Deadline');
-  t('Winners');
 
   return $field_instances;
 }

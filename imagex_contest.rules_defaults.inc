@@ -73,6 +73,56 @@ function imagex_contest_default_rules_configuration() {
       ]
     }
   }');
+  $items['rules_imagex_contest_entry_as_finalist'] = entity_import('rules_config', '{ "rules_imagex_contest_entry_as_finalist" : {
+      "LABEL" : "ImageX Contest Entry As Finalist",
+      "PLUGIN" : "rule set",
+      "TAGS" : [ "imagex_contest" ],
+      "REQUIRES" : [ "rules" ],
+      "USES VARIABLES" : { "entry_node" : { "label" : "Entry Node", "type" : "node" } },
+      "RULES" : [
+        { "RULE" : {
+            "IF" : [
+              { "entity_has_field" : { "entity" : [ "entry-node" ], "field" : "field_contest_entry_status" } },
+              { "NOT data_is" : { "data" : [ "entry-node:field-contest-entry-status:1" ], "value" : "1" } }
+            ],
+            "DO" : [
+              { "data_set" : {
+                  "data" : [ "entry-node:field-contest-entry-status" ],
+                  "value" : { "value" : { "1" : "1" } }
+                }
+              }
+            ],
+            "LABEL" : "Entry As Finalist"
+          }
+        }
+      ]
+    }
+  }');
+  $items['rules_imagex_contest_entry_as_winner'] = entity_import('rules_config', '{ "rules_imagex_contest_entry_as_winner" : {
+      "LABEL" : "ImageX Contest Entry As Winner",
+      "PLUGIN" : "rule set",
+      "TAGS" : [ "imagex_contest" ],
+      "REQUIRES" : [ "rules" ],
+      "USES VARIABLES" : { "entry_node" : { "label" : "Entry Node", "type" : "node" } },
+      "RULES" : [
+        { "RULE" : {
+            "IF" : [
+              { "entity_has_field" : { "entity" : [ "entry-node" ], "field" : "field_contest_entry_status" } },
+              { "NOT data_is" : { "data" : [ "entry-node:field-contest-entry-status:1" ], "value" : "2" } }
+            ],
+            "DO" : [
+              { "data_set" : {
+                  "data" : [ "entry-node:field-contest-entry-status" ],
+                  "value" : { "value" : { "1" : "1", "2" : "2" } }
+                }
+              }
+            ],
+            "LABEL" : "Entry As Winner"
+          }
+        }
+      ]
+    }
+  }');
   $items['rules_imagex_contest_entry_deadline'] = entity_import('rules_config', '{ "rules_imagex_contest_entry_deadline" : {
       "LABEL" : "ImageX Contest Entry Deadline",
       "PLUGIN" : "reaction rule",
