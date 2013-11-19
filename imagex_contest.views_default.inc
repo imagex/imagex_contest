@@ -11,6 +11,232 @@ function imagex_contest_views_default_views() {
   $export = array();
 
   $view = new view();
+  $view->name = 'imagex_contest_contests';
+  $view->description = 'Flexi content pane for displaying contest nodes';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'Imagex Contest Contests';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'Contests';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'better_exposed_filters';
+  $handler->display->display_options['exposed_form']['options']['bef'] = array(
+    'general' => array(
+      'allow_secondary' => 0,
+      'secondary_label' => 'Advanced options',
+    ),
+    'sort' => array(
+      'bef_format' => 'default',
+      'advanced' => array(
+        'collapsible' => 0,
+        'collapsible_label' => 'Sort options',
+        'combine' => 0,
+        'combine_rewrite' => '',
+        'reset' => 0,
+        'reset_label' => '',
+        'is_secondary' => 0,
+      ),
+    ),
+    'field_contest_entry_open_value' => array(
+      'bef_format' => 'default',
+      'more_options' => array(
+        'bef_select_all_none' => FALSE,
+        'bef_collapsible' => 0,
+        'is_secondary' => 0,
+        'bef_filter_description' => '',
+        'tokens' => array(
+          'available' => array(
+            0 => 'global_types',
+          ),
+        ),
+      ),
+    ),
+    'field_contest_voting_open_value' => array(
+      'bef_format' => 'default',
+      'more_options' => array(
+        'bef_select_all_none' => FALSE,
+        'bef_collapsible' => 0,
+        'is_secondary' => 0,
+        'bef_filter_description' => '',
+        'tokens' => array(
+          'available' => array(
+            0 => 'global_types',
+          ),
+        ),
+      ),
+    ),
+  );
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['row_plugin'] = 'fields';
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  /* Field: Content: Body */
+  $handler->display->display_options['fields']['body']['id'] = 'body';
+  $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
+  $handler->display->display_options['fields']['body']['field'] = 'body';
+  $handler->display->display_options['fields']['body']['label'] = '';
+  $handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['body']['type'] = 'text_trimmed';
+  $handler->display->display_options['fields']['body']['settings'] = array(
+    'trim_length' => '100',
+  );
+  /* Field: Content: Entry Deadline */
+  $handler->display->display_options['fields']['field_contest_entry_deadline']['id'] = 'field_contest_entry_deadline';
+  $handler->display->display_options['fields']['field_contest_entry_deadline']['table'] = 'field_data_field_contest_entry_deadline';
+  $handler->display->display_options['fields']['field_contest_entry_deadline']['field'] = 'field_contest_entry_deadline';
+  $handler->display->display_options['fields']['field_contest_entry_deadline']['element_type'] = 'span';
+  $handler->display->display_options['fields']['field_contest_entry_deadline']['element_label_type'] = 'span';
+  $handler->display->display_options['fields']['field_contest_entry_deadline']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+    'show_repeat_rule' => 'show',
+  );
+  /* Field: Content: Voting Deadline */
+  $handler->display->display_options['fields']['field_contest_voting_deadline']['id'] = 'field_contest_voting_deadline';
+  $handler->display->display_options['fields']['field_contest_voting_deadline']['table'] = 'field_data_field_contest_voting_deadline';
+  $handler->display->display_options['fields']['field_contest_voting_deadline']['field'] = 'field_contest_voting_deadline';
+  $handler->display->display_options['fields']['field_contest_voting_deadline']['element_type'] = 'span';
+  $handler->display->display_options['fields']['field_contest_voting_deadline']['element_label_type'] = 'span';
+  $handler->display->display_options['fields']['field_contest_voting_deadline']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+    'show_repeat_rule' => 'show',
+  );
+  /* Field: Content: Link */
+  $handler->display->display_options['fields']['view_node']['id'] = 'view_node';
+  $handler->display->display_options['fields']['view_node']['table'] = 'views_entity_node';
+  $handler->display->display_options['fields']['view_node']['field'] = 'view_node';
+  $handler->display->display_options['fields']['view_node']['label'] = '';
+  $handler->display->display_options['fields']['view_node']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['view_node']['text'] = 'Find Out More';
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  $handler->display->display_options['sorts']['created']['exposed'] = TRUE;
+  $handler->display->display_options['sorts']['created']['expose']['label'] = 'Post date';
+  /* Sort criterion: Content: Entry Deadline (field_contest_entry_deadline) */
+  $handler->display->display_options['sorts']['field_contest_entry_deadline_value']['id'] = 'field_contest_entry_deadline_value';
+  $handler->display->display_options['sorts']['field_contest_entry_deadline_value']['table'] = 'field_data_field_contest_entry_deadline';
+  $handler->display->display_options['sorts']['field_contest_entry_deadline_value']['field'] = 'field_contest_entry_deadline_value';
+  $handler->display->display_options['sorts']['field_contest_entry_deadline_value']['exposed'] = TRUE;
+  $handler->display->display_options['sorts']['field_contest_entry_deadline_value']['expose']['label'] = 'Entry Deadline';
+  /* Sort criterion: Content: Voting Deadline (field_contest_voting_deadline) */
+  $handler->display->display_options['sorts']['field_contest_voting_deadline_value']['id'] = 'field_contest_voting_deadline_value';
+  $handler->display->display_options['sorts']['field_contest_voting_deadline_value']['table'] = 'field_data_field_contest_voting_deadline';
+  $handler->display->display_options['sorts']['field_contest_voting_deadline_value']['field'] = 'field_contest_voting_deadline_value';
+  $handler->display->display_options['sorts']['field_contest_voting_deadline_value']['order'] = 'DESC';
+  $handler->display->display_options['sorts']['field_contest_voting_deadline_value']['exposed'] = TRUE;
+  $handler->display->display_options['sorts']['field_contest_voting_deadline_value']['expose']['label'] = 'Voting Deadline';
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'contest' => 'contest',
+  );
+  /* Filter criterion: Content: Open For Entries (field_contest_entry_open) */
+  $handler->display->display_options['filters']['field_contest_entry_open_value']['id'] = 'field_contest_entry_open_value';
+  $handler->display->display_options['filters']['field_contest_entry_open_value']['table'] = 'field_data_field_contest_entry_open';
+  $handler->display->display_options['filters']['field_contest_entry_open_value']['field'] = 'field_contest_entry_open_value';
+  $handler->display->display_options['filters']['field_contest_entry_open_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_contest_entry_open_value']['expose']['operator_id'] = 'field_contest_entry_open_value_op';
+  $handler->display->display_options['filters']['field_contest_entry_open_value']['expose']['label'] = 'Contest Open For Entries?';
+  $handler->display->display_options['filters']['field_contest_entry_open_value']['expose']['operator'] = 'field_contest_entry_open_value_op';
+  $handler->display->display_options['filters']['field_contest_entry_open_value']['expose']['identifier'] = 'field_contest_entry_open_value';
+  $handler->display->display_options['filters']['field_contest_entry_open_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    7 => 0,
+    5 => 0,
+    6 => 0,
+    4 => 0,
+  );
+  $handler->display->display_options['filters']['field_contest_entry_open_value']['group_info']['label'] = 'Open For Entries (field_contest_entry_open)';
+  $handler->display->display_options['filters']['field_contest_entry_open_value']['group_info']['identifier'] = 'field_contest_entry_open_value';
+  $handler->display->display_options['filters']['field_contest_entry_open_value']['group_info']['widget'] = 'radios';
+  $handler->display->display_options['filters']['field_contest_entry_open_value']['group_info']['group_items'] = array(
+    1 => array(
+      'title' => 'Entries Closed',
+      'operator' => 'or',
+      'value' => array(
+        0 => '0',
+      ),
+    ),
+    2 => array(
+      'title' => 'Entries Open',
+      'operator' => 'or',
+      'value' => array(
+        1 => '1',
+      ),
+    ),
+  );
+  $handler->display->display_options['filters']['field_contest_entry_open_value']['reduce_duplicates'] = TRUE;
+  /* Filter criterion: Content: Open For Voting (field_contest_voting_open) */
+  $handler->display->display_options['filters']['field_contest_voting_open_value']['id'] = 'field_contest_voting_open_value';
+  $handler->display->display_options['filters']['field_contest_voting_open_value']['table'] = 'field_data_field_contest_voting_open';
+  $handler->display->display_options['filters']['field_contest_voting_open_value']['field'] = 'field_contest_voting_open_value';
+  $handler->display->display_options['filters']['field_contest_voting_open_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_contest_voting_open_value']['expose']['operator_id'] = 'field_contest_voting_open_value_op';
+  $handler->display->display_options['filters']['field_contest_voting_open_value']['expose']['label'] = 'Contest Open For Voting?';
+  $handler->display->display_options['filters']['field_contest_voting_open_value']['expose']['operator'] = 'field_contest_voting_open_value_op';
+  $handler->display->display_options['filters']['field_contest_voting_open_value']['expose']['identifier'] = 'field_contest_voting_open_value';
+  $handler->display->display_options['filters']['field_contest_voting_open_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    7 => 0,
+    5 => 0,
+    6 => 0,
+    4 => 0,
+  );
+  $handler->display->display_options['filters']['field_contest_voting_open_value']['reduce_duplicates'] = TRUE;
+
+  /* Display: Contests Content pane */
+  $handler = $view->new_display('panel_pane', 'Contests Content pane', 'panel_pane_1');
+  $handler->display->display_options['pane_category']['name'] = 'Imagex';
+  $handler->display->display_options['pane_category']['weight'] = '0';
+  $handler->display->display_options['allow']['use_pager'] = 'use_pager';
+  $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
+  $handler->display->display_options['allow']['offset'] = 0;
+  $handler->display->display_options['allow']['link_to_view'] = 0;
+  $handler->display->display_options['allow']['more_link'] = 0;
+  $handler->display->display_options['allow']['path_override'] = 'path_override';
+  $handler->display->display_options['allow']['title_override'] = 'title_override';
+  $handler->display->display_options['allow']['exposed_form'] = 'exposed_form';
+  $handler->display->display_options['allow']['fields_override'] = 'fields_override';
+  $export['imagex_contest_contests'] = $view;
+
+  $view = new view();
   $view->name = 'imagex_contest_entries';
   $view->description = 'Gives contest admins an overview of entries submitted';
   $view->tag = 'default';
