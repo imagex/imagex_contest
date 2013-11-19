@@ -64,6 +64,45 @@ function imagex_contest_form_contest_entry_node_form_alter(&$form, &$form_state,
 }
 
 /**
+ * Implements HOOK_form_alter()
+ */
+function imagex_contest_form_alter(&$form, &$form_state, $form_id) {
+  // Temp fix for https://drupal.org/node/1750950
+  // Boolean single checkboxes have no labels
+  switch ($form_id) {
+    case 'views_content_views_panes_content_type_edit_form':
+      $checkboxes = array(
+        'field_contest_entry_open_value',
+        'field_contest_voting_open_value',
+      );
+      if (!empty($form['exposed'])) {
+        foreach ($checkboxes as $checkbox) {
+          if (!empty($form['exposed']['filter-' . $checkbox])) {
+            $form['exposed']['filter-' . $checkbox][$checkbox]['#options'][0] = t('No');
+            $form['exposed']['filter-' . $checkbox][$checkbox]['#options'][1] = t('Yes');
+          }
+        }
+      }
+      break;
+  }
+}
+
+/**
+ * Implements HOOK_preprocess_node()
+ */
+function imagex_contest_preprocess_node(&$vars) {
+  $node = $vars['node'];
+  
+  // Add class to contest entries if finalist or winner
+  if ($node->type == 'contest_entry') {
+    $node_wrapper = entity_metadata_wrapper('node', $node);
+    foreach ($node_wrapper->field_contest_entry_status->getIterator() as $delta => $value) {
+      $vars['classes_array'][] = 'node-contest-entry-' . trim(strtolower($value->label()));
+    }
+  }
+}
+
+/**
  * Determines if a contest is open to entries & global has access
  *
  * Returns links array based on access
