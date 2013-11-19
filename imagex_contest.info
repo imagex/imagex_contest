@@ -129,6 +129,7 @@ features[variable][] = workbench_access_node_type_contest
 features[variable][] = workbench_access_node_type_contest_entry
 features[variable][] = workbench_moderation_default_state_contest
 features[variable][] = workbench_moderation_default_state_contest_entry
+features[views_view][] = imagex_contest_entries
 features[views_view][] = imagex_contest_entries_admin
 features_exclude[dependencies][ctools] = ctools
 features_exclude[dependencies][imagex_common_fields] = imagex_common_fields

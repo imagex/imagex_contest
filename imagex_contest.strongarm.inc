@@ -360,7 +360,7 @@ function imagex_contest_strongarm() {
     'status' => 1,
     'view modes' => array(
       'page_manager' => array(
-        'status' => 1,
+        'status' => 0,
         'default' => 1,
         'choice' => 1,
       ),
@@ -369,32 +369,12 @@ function imagex_contest_strongarm() {
         'default' => 1,
         'choice' => 1,
       ),
-      'full' => array(
-        'status' => 0,
-        'default' => 0,
-        'choice' => 0,
-      ),
       'teaser' => array(
         'status' => 0,
-        'default' => 0,
-        'choice' => 0,
-      ),
-      'rss' => array(
-        'status' => 0,
-        'default' => 0,
-        'choice' => 0,
-      ),
-      'diff_standard' => array(
-        'status' => 0,
-        'default' => 0,
+        'default' => 1,
         'choice' => 0,
       ),
       'search_result_search_api' => array(
-        'status' => 0,
-        'default' => 0,
-        'choice' => 0,
-      ),
-      'token' => array(
         'status' => 0,
         'default' => 0,
         'choice' => 0,
@@ -411,18 +391,13 @@ function imagex_contest_strongarm() {
     'status' => 0,
     'view modes' => array(
       'page_manager' => array(
-        'status' => 0,
-        'default' => 0,
-        'choice' => 0,
+        'status' => 1,
+        'default' => 1,
+        'choice' => 1,
       ),
       'default' => array(
         'status' => 0,
-        'default' => 0,
-        'choice' => 0,
-      ),
-      'full' => array(
-        'status' => 0,
-        'default' => 0,
+        'default' => 1,
         'choice' => 0,
       ),
       'teaser' => array(
@@ -430,22 +405,7 @@ function imagex_contest_strongarm() {
         'default' => 0,
         'choice' => 0,
       ),
-      'rss' => array(
-        'status' => 0,
-        'default' => 0,
-        'choice' => 0,
-      ),
-      'diff_standard' => array(
-        'status' => 0,
-        'default' => 0,
-        'choice' => 0,
-      ),
       'search_result_search_api' => array(
-        'status' => 0,
-        'default' => 0,
-        'choice' => 0,
-      ),
-      'token' => array(
         'status' => 0,
         'default' => 0,
         'choice' => 0,
