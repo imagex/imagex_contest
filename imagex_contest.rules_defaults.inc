@@ -78,7 +78,10 @@ function imagex_contest_default_rules_configuration() {
       "PLUGIN" : "rule set",
       "TAGS" : [ "imagex_contest" ],
       "REQUIRES" : [ "rules" ],
-      "USES VARIABLES" : { "entry_node" : { "label" : "Entry Node", "type" : "node" } },
+      "USES VARIABLES" : {
+        "entry_node" : { "label" : "Entry Node", "type" : "node" },
+        "notify_entry_author" : { "label" : "Notify Entry Author", "type" : "integer" }
+      },
       "RULES" : [
         { "RULE" : {
             "IF" : [
@@ -94,6 +97,39 @@ function imagex_contest_default_rules_configuration() {
             ],
             "LABEL" : "Entry As Finalist"
           }
+        },
+        { "RULE" : {
+            "PROVIDE" : { "entity_fetched" : { "contest_entity" : "Contest entity" } },
+            "IF" : [
+              { "entity_has_field" : { "entity" : [ "entry-node" ], "field" : "field_contest_entry_status" } },
+              { "NOT data_is" : {
+                  "data" : [ "entry-node:field-contest-entry-status" ],
+                  "value" : { "value" : { "1" : "1" } }
+                }
+              },
+              { "entity_has_field" : { "entity" : [ "entry-node" ], "field" : "field_contest_entry_contest" } },
+              { "data_is" : { "data" : [ "notify-entry-author" ], "value" : "1" } }
+            ],
+            "DO" : [
+              { "entity_fetch" : {
+                  "USING" : {
+                    "type" : "node",
+                    "id" : [ "entry-node:field-contest-entry-contest:nid" ]
+                  },
+                  "PROVIDE" : { "entity_fetched" : { "contest_entity" : "Contest entity" } }
+                }
+              },
+              { "mail" : {
+                  "to" : "[entry-node:author:mail]",
+                  "subject" : "Congratulations, your contest entry was selected as a finalist.",
+                  "message" : "Congratulations, your contest entry on the contest, [contest-entity:title] ([contest-entity:url]) was selected as a finalist.\\r\\n\\r\\nYour entry: [entry-node:title] ([entry-node:url])\\r\\n\\r\\n",
+                  "from" : "[contest-entity:author:mail]",
+                  "language" : [ "" ]
+                }
+              }
+            ],
+            "LABEL" : "Email Finalist"
+          }
         }
       ]
     }
@@ -103,7 +139,10 @@ function imagex_contest_default_rules_configuration() {
       "PLUGIN" : "rule set",
       "TAGS" : [ "imagex_contest" ],
       "REQUIRES" : [ "rules" ],
-      "USES VARIABLES" : { "entry_node" : { "label" : "Entry Node", "type" : "node" } },
+      "USES VARIABLES" : {
+        "entry_node" : { "label" : "Entry Node", "type" : "node" },
+        "notify_entry_author" : { "label" : "Notify Entry Author", "type" : "integer" }
+      },
       "RULES" : [
         { "RULE" : {
             "IF" : [
@@ -118,6 +157,39 @@ function imagex_contest_default_rules_configuration() {
               }
             ],
             "LABEL" : "Entry As Winner"
+          }
+        },
+        { "RULE" : {
+            "PROVIDE" : { "entity_fetched" : { "contest_entity" : "Contest entity" } },
+            "IF" : [
+              { "entity_has_field" : { "entity" : [ "entry-node" ], "field" : "field_contest_entry_status" } },
+              { "NOT data_is" : {
+                  "data" : [ "entry-node:field-contest-entry-status" ],
+                  "value" : { "value" : { "2" : "2" } }
+                }
+              },
+              { "entity_has_field" : { "entity" : [ "entry-node" ], "field" : "field_contest_entry_contest" } },
+              { "data_is" : { "data" : [ "notify-entry-author" ], "value" : "1" } }
+            ],
+            "DO" : [
+              { "entity_fetch" : {
+                  "USING" : {
+                    "type" : "node",
+                    "id" : [ "entry-node:field-contest-entry-contest:nid" ]
+                  },
+                  "PROVIDE" : { "entity_fetched" : { "contest_entity" : "Contest entity" } }
+                }
+              },
+              { "mail" : {
+                  "to" : "[entry-node:author:mail]",
+                  "subject" : "Congratulations, your contest entry was selected as a winner.",
+                  "message" : "Congratulations, your contest entry on the contest, [contest-entity:title] ([contest-entity:url]) was selected as a winner.\\r\\n\\r\\nYour entry: [entry-node:title] ([entry-node:url])\\r\\n",
+                  "from" : "[contest-entity:author:mail]",
+                  "language" : [ "" ]
+                }
+              }
+            ],
+            "LABEL" : "Email Winner"
           }
         }
       ]

@@ -67,8 +67,6 @@ function imagex_contest_form_contest_entry_node_form_alter(&$form, &$form_state,
  * Implements HOOK_form_alter()
  */
 function imagex_contest_form_alter(&$form, &$form_state, $form_id) {
-  // Temp fix for https://drupal.org/node/1750950
-  // Boolean single checkboxes have no labels
   switch ($form_id) {
     case 'views_content_views_panes_content_type_edit_form':
       $checkboxes = array(
@@ -84,6 +82,30 @@ function imagex_contest_form_alter(&$form, &$form_state, $form_id) {
         }
       }
       break;
+  }
+}
+
+/**
+ * Implements hook_views_bulk_operations_form_alter()
+ *
+ * @see: views_bulk_operations.api.php
+ */
+function imagex_contest_views_bulk_operations_form_alter(&$form, &$form_state, $vbo) {
+  // Hijack the "no mail" variable for the rules_imagex_contest_entry_as_winner & rules_imagex_contest_entry_as_finalist
+  // rules and make it look better
+  $view = $vbo->view;
+  if ($view->name == 'imagex_contest_entries_admin' && $form_state['step'] == 'views_bulk_operations_config_form' && !empty($form['parameter']['notify_entry_author'])) {
+    $form['parameter']['notify_entry_author']['settings']['notify_entry_author']['#title'] = t('Notify contest entry author?');
+    $form['parameter']['notify_entry_author']['settings']['notify_entry_author']['#description'] = t('By default contest entry authors will be notified via email about their entry
+                                                                             being selected as a winner or finalist in the contest. Select "no" to not notify them.');
+    
+    // rules requires the parameter so have to pass something hence yes & no not opt out
+    $form['parameter']['notify_entry_author']['settings']['notify_entry_author']['#type'] = 'radios';
+    $form['parameter']['notify_entry_author']['settings']['notify_entry_author']['#options'] = array(
+      1 => t('Yes'),
+      2 => t('No')
+    );
+    $form['parameter']['notify_entry_author']['settings']['notify_entry_author']['#default_value'] = 1;
   }
 }
 
