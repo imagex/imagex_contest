@@ -138,7 +138,6 @@ features_exclude[dependencies][imagex_common_fields] = imagex_common_fields
 features_exclude[dependencies][page_manager] = page_manager
 features_exclude[dependencies][addthis_displays] = addthis_displays
 features_exclude[dependencies][imagex_addthis] = imagex_addthis
-features_exclude[dependencies][rules_url_argument] = rules_url_argument
 features_exclude[field_instance][node-contest-field_addthis] = node-contest-field_addthis
 features_exclude[field_instance][node-contest_entry-field_addthis] = node-contest_entry-field_addthis
 project path = profiles/imagex_installkit/modules/imagex/modules
