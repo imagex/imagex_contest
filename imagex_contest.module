@@ -67,6 +67,8 @@ function imagex_contest_form_contest_entry_node_form_alter(&$form, &$form_state,
  * Implements HOOK_form_alter()
  */
 function imagex_contest_form_alter(&$form, &$form_state, $form_id) {
+  // Temp fix for https://drupal.org/node/1750950
+  // Boolean single checkboxes have no labels
   switch ($form_id) {
     case 'views_content_views_panes_content_type_edit_form':
       $checkboxes = array(
