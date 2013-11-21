@@ -6,13 +6,36 @@
 
 include_once 'imagex_contest.features.inc';
 
+/**
+ * Implements hook_menu().
+ */
+function imagex_contest_menu() {
+  $items['contest/select-entry/%node/%node/%'] = array(
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('imagex_contest_contest_admin_form', 2, 3, 4),
+    'access callback' => 'imagex_contest_contest_admin_access',
+    'access arguments' => array(2, 3, 4),
+  );
+  
+  return $items;
+}
 
 /**
  * Implements hook_node_view().
  */
 function imagex_contest_node_view($node, $view_mode, $langcode) {
+  //For users to enter contest if allowed
   if ($node->type == 'contest' && $links = imagex_contest_contest_entry_links($node)) {    
     $node->content['links']['imagex_contest_add_entry'] = array(
+      '#theme' => 'links__imagex_contest_add_entry',
+      '#links' => $links,
+      '#attributes' => array('class' => array('links', 'inline')),
+    );
+  }
+  
+  // For admins of contests to quickly select finalists & winners
+  if ($node->type == 'contest_entry' && $links = imagex_contest_contest_admin_links($node)) {
+    $node->content['links']['imagex_contest_contest_admin_links'] = array(
       '#theme' => 'links__imagex_contest_add_entry',
       '#links' => $links,
       '#attributes' => array('class' => array('links', 'inline')),
@@ -84,6 +107,30 @@ function imagex_contest_form_alter(&$form, &$form_state, $form_id) {
         }
       }
       break;
+  }
+}
+
+/**
+ * Implements hook_views_bulk_operations_form_alter()
+ *
+ * @see: views_bulk_operations.api.php
+ */
+function imagex_contest_views_bulk_operations_form_alter(&$form, &$form_state, $vbo) {
+  // Hijack the "no mail" variable for the rules_imagex_contest_entry_as_winner & rules_imagex_contest_entry_as_finalist
+  // rules and make it look better
+  $view = $vbo->view;
+  if ($view->name == 'imagex_contest_entries_admin' && $form_state['step'] == 'views_bulk_operations_config_form' && !empty($form['parameter']['notify_entry_author'])) {
+    $form['parameter']['notify_entry_author']['settings']['notify_entry_author']['#title'] = t('Notify contest entry author?');
+    $form['parameter']['notify_entry_author']['settings']['notify_entry_author']['#description'] = t('By default contest entry authors will be notified via email about their entry
+                                                                             being selected as a winner or finalist in the contest. Select "no" to not notify them.');
+    
+    // rules requires the parameter so have to pass something hence yes & no not opt out
+    $form['parameter']['notify_entry_author']['settings']['notify_entry_author']['#type'] = 'radios';
+    $form['parameter']['notify_entry_author']['settings']['notify_entry_author']['#options'] = array(
+      1 => t('Yes'),
+      2 => t('No')
+    );
+    $form['parameter']['notify_entry_author']['settings']['notify_entry_author']['#default_value'] = 1;
   }
 }
 
@@ -162,4 +209,120 @@ function imagex_contest_contest_entry_links($node) {
   }
   
   return $links;
+}
+
+/**
+ * Provides contest admin links on entries ie. Select As Finalist
+ *
+ * Returns links array based on access
+ */
+function imagex_contest_contest_admin_links($node) {
+  $links = array();
+
+  // Get related contest data
+  $contest_node = $node->field_contest_entry_contest[LANGUAGE_NONE][0]['entity'];
+  $contest_entry_node = $node;
+  
+  // User access
+  if (!imagex_contest_contest_admin_access($contest_node, $contest_entry_node)) {
+    return FALSE;
+  }
+  
+  // Contest no longer open
+  $contest_node_wrapper = entity_metadata_wrapper('node', $contest_node);
+  $content_entry_open = $contest_node_wrapper->field_contest_entry_open->value();
+  $content_voting_open = $contest_node_wrapper->field_contest_voting_open->value();
+  if (empty($content_entry_open) && empty($content_voting_open)) {
+    return FALSE;
+  }  
+  
+  // Check entries current status (finalist or winner)
+  $statuses = array(
+    1 => 'finalist',
+    2 => 'winner',
+  );
+  $contest_entry_node_wrapper = entity_metadata_wrapper('node', $contest_entry_node);
+  $contest_entry_status = $contest_entry_node_wrapper->field_contest_entry_status->value();
+  if (!empty($contest_entry_status)) {
+    // Entry already finalist or winner, kill the 
+    foreach ($contest_entry_status as $key) {
+      unset($statuses[$key]);
+    }
+  }
+  
+  // Default, make links for both statuses
+  if (!empty($statuses)) {
+    foreach ($statuses as $key => $status) {
+      $links['imagex_contest_contest_entry_admin_' . $status] = array(
+        'title' => t('Select Entry As @status', array('@status' => drupal_ucfirst($status))),
+        'href' => 'contest/select-entry/' . $contest_node->nid . '/' . $contest_entry_node->nid . '/' . $status,
+        'query' => drupal_get_destination(),
+        'attributes' => array(
+          'title' => t('Submit your entry into this contest now!'),
+          'class' => array('imagex-contest-contest-entry-admin-' . $status),
+        ),
+      );
+    }
+  }
+  
+  return $links;
+}
+
+/**
+ * Checks a user can admin a contest
+ */
+function imagex_contest_contest_admin_access($contest_node, $contest_entry_node, $status =  '') {
+  global $user;
+  if ($user->uid != $contest_node->uid && !user_access('create contest_entry content')  && !user_access('administer nodes')) {
+    return FALSE;
+  }
+  return TRUE;
+}
+
+/**
+ * Invokes a rules set once user confirms
+ *
+ * @param $contest_node
+ *  Related contest node object
+ * @param $contest_entry_node
+ *  Contest entry node to run workflow for
+ * @param $statuses
+ *  Array, determines the action to perform, select as finalist or winner
+ */
+function imagex_contest_contest_admin_form($form, &$form_state, $contest_node, $contest_entry_node, $status) {
+  $rules_sets = array(
+    'finalist' => 'rules_imagex_contest_entry_as_finalist',
+    'winner' => 'rules_imagex_contest_entry_as_winner',
+  );
+
+  $form = array();
+  $form['#rules_set'] = $rules_sets[$status];
+  $form['#contest_node'] = $contest_node;
+  $form['#contest_entry_node'] = $contest_entry_node;
+  
+  $form['entry_author_notify'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Notify contest entry author?'),
+    '#default_value' => 1,
+  );
+  
+  $form = confirm_form($form,
+    t('Are you sure you want to select this entry as a %status?', array('%status' => $status)),
+    $_GET['q']
+  );  
+  
+  return $form;
+}
+
+/**
+ * Submit callback for imagex_contest_contest_admin_form()
+ */
+function imagex_contest_contest_admin_form_submit($form, &$form_state) {
+  $rules_set = $form['#rules_set'];
+  $contest_node = $form['#contest_node'];
+  $contest_entry_node = $form['#contest_entry_node'];
+  $entry_author_notify = empty($form_state['values']['entry_author_notify']) ? 2 : 1;
+  
+  // Invoke rules
+  $rule = rules_invoke_component($rules_set, $contest_entry_node, $entry_author_notify);
 }
