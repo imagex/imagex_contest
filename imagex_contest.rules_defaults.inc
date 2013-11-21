@@ -84,21 +84,6 @@ function imagex_contest_default_rules_configuration() {
       },
       "RULES" : [
         { "RULE" : {
-            "IF" : [
-              { "entity_has_field" : { "entity" : [ "entry-node" ], "field" : "field_contest_entry_status" } },
-              { "NOT data_is" : { "data" : [ "entry-node:field-contest-entry-status:1" ], "value" : "1" } }
-            ],
-            "DO" : [
-              { "data_set" : {
-                  "data" : [ "entry-node:field-contest-entry-status" ],
-                  "value" : { "value" : { "1" : "1" } }
-                }
-              }
-            ],
-            "LABEL" : "Entry As Finalist"
-          }
-        },
-        { "RULE" : {
             "PROVIDE" : { "entity_fetched" : { "contest_entity" : "Contest entity" } },
             "IF" : [
               { "entity_has_field" : { "entity" : [ "entry-node" ], "field" : "field_contest_entry_status" } },
@@ -130,6 +115,25 @@ function imagex_contest_default_rules_configuration() {
             ],
             "LABEL" : "Email Finalist"
           }
+        },
+        { "RULE" : {
+            "IF" : [
+              { "entity_has_field" : { "entity" : [ "entry-node" ], "field" : "field_contest_entry_status" } },
+              { "NOT data_is" : {
+                  "data" : [ "entry-node:field-contest-entry-status" ],
+                  "value" : { "value" : { "1" : "1" } }
+                }
+              }
+            ],
+            "DO" : [
+              { "data_set" : {
+                  "data" : [ "entry-node:field-contest-entry-status" ],
+                  "value" : { "value" : { "1" : "1" } }
+                }
+              }
+            ],
+            "LABEL" : "Entry As Finalist"
+          }
         }
       ]
     }
@@ -144,21 +148,6 @@ function imagex_contest_default_rules_configuration() {
         "notify_entry_author" : { "label" : "Notify Entry Author", "type" : "integer" }
       },
       "RULES" : [
-        { "RULE" : {
-            "IF" : [
-              { "entity_has_field" : { "entity" : [ "entry-node" ], "field" : "field_contest_entry_status" } },
-              { "NOT data_is" : { "data" : [ "entry-node:field-contest-entry-status:1" ], "value" : "2" } }
-            ],
-            "DO" : [
-              { "data_set" : {
-                  "data" : [ "entry-node:field-contest-entry-status" ],
-                  "value" : { "value" : { "1" : "1", "2" : "2" } }
-                }
-              }
-            ],
-            "LABEL" : "Entry As Winner"
-          }
-        },
         { "RULE" : {
             "PROVIDE" : { "entity_fetched" : { "contest_entity" : "Contest entity" } },
             "IF" : [
@@ -190,6 +179,21 @@ function imagex_contest_default_rules_configuration() {
               }
             ],
             "LABEL" : "Email Winner"
+          }
+        },
+        { "RULE" : {
+            "IF" : [
+              { "entity_has_field" : { "entity" : [ "entry-node" ], "field" : "field_contest_entry_status" } },
+              { "NOT data_is" : { "data" : [ "entry-node:field-contest-entry-status:1" ], "value" : "2" } }
+            ],
+            "DO" : [
+              { "data_set" : {
+                  "data" : [ "entry-node:field-contest-entry-status" ],
+                  "value" : { "value" : { "1" : "1", "2" : "2" } }
+                }
+              }
+            ],
+            "LABEL" : "Entry As Winner"
           }
         }
       ]
