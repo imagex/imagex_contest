@@ -53,7 +53,7 @@ function imagex_contest_voting_views_bulk_operations_form_alter(&$form, &$form_s
           }
         }
       }
-      dsm($form);
+      
       // Clean nasty fieldset
       if (!empty($form['select'])) {
         $form['select']['#title'] = '';
