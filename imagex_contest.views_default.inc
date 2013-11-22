@@ -13,7 +13,7 @@ function imagex_contest_views_default_views() {
   $view = new view();
   $view->name = 'imagex_contest_contests';
   $view->description = 'Flexi content pane for displaying contest nodes';
-  $view->tag = 'default';
+  $view->tag = 'imagex_contest';
   $view->base_table = 'node';
   $view->human_name = 'Imagex Contest Contests';
   $view->core = 7;
@@ -238,8 +238,8 @@ function imagex_contest_views_default_views() {
 
   $view = new view();
   $view->name = 'imagex_contest_entries';
-  $view->description = 'Gives contest admins an overview of entries submitted';
-  $view->tag = 'default';
+  $view->description = 'Displays entries for a given contest';
+  $view->tag = 'imagex_contest';
   $view->base_table = 'node';
   $view->human_name = 'Imagex Contest Entries';
   $view->core = 7;
@@ -390,7 +390,7 @@ function imagex_contest_views_default_views() {
   $view = new view();
   $view->name = 'imagex_contest_entries_admin';
   $view->description = 'Gives contest admins an overview of entries submitted';
-  $view->tag = 'default';
+  $view->tag = 'imagex_contest';
   $view->base_table = 'node';
   $view->human_name = 'Imagex Contest Entries (admin)';
   $view->core = 7;

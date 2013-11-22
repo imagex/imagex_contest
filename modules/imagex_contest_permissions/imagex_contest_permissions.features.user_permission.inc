@@ -59,6 +59,13 @@ function imagex_contest_permissions_user_default_permissions() {
     'module' => 'panelizer',
   );
 
+  // Exported permission: 'administer voting api'.
+  $permissions['administer voting api'] = array(
+    'name' => 'administer voting api',
+    'roles' => array(),
+    'module' => 'votingapi',
+  );
+
   // Exported permission: 'create contest content'.
   $permissions['create contest content'] = array(
     'name' => 'create contest content',
@@ -170,6 +177,15 @@ function imagex_contest_permissions_user_default_permissions() {
       'authenticated user' => 'authenticated user',
     ),
     'module' => 'node',
+  );
+
+  // Exported permission: 'vote on contest entries'.
+  $permissions['vote on contest entries'] = array(
+    'name' => 'vote on contest entries',
+    'roles' => array(
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'imagex_contest_voting',
   );
 
   return $permissions;
