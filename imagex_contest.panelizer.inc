@@ -241,6 +241,90 @@ function imagex_contest_panelizer_defaults() {
     $pane = new stdClass();
     $pane->pid = 'new-8';
     $pane->panel = 'one_main';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'imagex_contest_entries-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'use_pager' => 1,
+      'pager_id' => '0',
+      'items_per_page' => '30',
+      'path' => '',
+      'fields_override' => array(
+        'views_bulk_operations' => 1,
+        'title' => 1,
+        'field_contest_entry_status' => 1,
+        'field_contest_entry_media' => 1,
+        'body' => 1,
+        'name' => 1,
+      ),
+      'exposed' => array(
+        'field_contest_entry_status_value_op' => 'or',
+        'field_contest_entry_status_value' => array(
+          2 => '2',
+        ),
+      ),
+      'context' => array(
+        0 => 'panelizer',
+      ),
+      'override_title' => 1,
+      'override_title_text' => 'The Winners',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 7;
+    $pane->locks = array();
+    $display->content['new-8'] = $pane;
+    $display->panels['one_main'][7] = 'new-8';
+    $pane = new stdClass();
+    $pane->pid = 'new-9';
+    $pane->panel = 'one_main';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'imagex_contest_entries-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'use_pager' => 1,
+      'pager_id' => '0',
+      'items_per_page' => '30',
+      'path' => '',
+      'fields_override' => array(
+        'views_bulk_operations' => 1,
+        'title' => 1,
+        'field_contest_entry_status' => 1,
+        'field_contest_entry_media' => 1,
+        'body' => 1,
+        'name' => 1,
+      ),
+      'exposed' => array(
+        'field_contest_entry_status_value_op' => 'or',
+        'field_contest_entry_status_value' => array(
+          1 => '1',
+        ),
+      ),
+      'context' => array(
+        0 => 'panelizer',
+      ),
+      'override_title' => 1,
+      'override_title_text' => 'The Finalists',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 8;
+    $pane->locks = array();
+    $display->content['new-9'] = $pane;
+    $display->panels['one_main'][8] = 'new-9';
+    $pane = new stdClass();
+    $pane->pid = 'new-10';
+    $pane->panel = 'one_main';
     $pane->type = 'node_links';
     $pane->subtype = 'node_links';
     $pane->shown = TRUE;
@@ -261,12 +345,12 @@ function imagex_contest_panelizer_defaults() {
       'css_class' => 'link-wrapper',
     );
     $pane->extras = array();
-    $pane->position = 7;
+    $pane->position = 9;
     $pane->locks = array();
-    $display->content['new-8'] = $pane;
-    $display->panels['one_main'][7] = 'new-8';
+    $display->content['new-10'] = $pane;
+    $display->panels['one_main'][9] = 'new-10';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-8';
+  $display->title_pane = 'new-10';
   $panelizer->display = $display;
   $export['node:contest:default'] = $panelizer;
 
@@ -303,7 +387,7 @@ function imagex_contest_panelizer_defaults() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-9';
+    $pane->pid = 'new-11';
     $pane->panel = 'one_main';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:body';
@@ -326,10 +410,10 @@ function imagex_contest_panelizer_defaults() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-9'] = $pane;
-    $display->panels['one_main'][0] = 'new-9';
+    $display->content['new-11'] = $pane;
+    $display->panels['one_main'][0] = 'new-11';
     $pane = new stdClass();
-    $pane->pid = 'new-10';
+    $pane->pid = 'new-12';
     $pane->panel = 'one_main';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_contest_media';
@@ -352,10 +436,10 @@ function imagex_contest_panelizer_defaults() {
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-10'] = $pane;
-    $display->panels['one_main'][1] = 'new-10';
+    $display->content['new-12'] = $pane;
+    $display->panels['one_main'][1] = 'new-12';
     $pane = new stdClass();
-    $pane->pid = 'new-11';
+    $pane->pid = 'new-13';
     $pane->panel = 'one_main';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_contest_rules';
@@ -378,10 +462,10 @@ function imagex_contest_panelizer_defaults() {
     $pane->extras = array();
     $pane->position = 2;
     $pane->locks = array();
-    $display->content['new-11'] = $pane;
-    $display->panels['one_main'][2] = 'new-11';
+    $display->content['new-13'] = $pane;
+    $display->panels['one_main'][2] = 'new-13';
     $pane = new stdClass();
-    $pane->pid = 'new-12';
+    $pane->pid = 'new-14';
     $pane->panel = 'one_main';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_contest_entry_deadline';
@@ -429,10 +513,10 @@ function imagex_contest_panelizer_defaults() {
     $pane->extras = array();
     $pane->position = 3;
     $pane->locks = array();
-    $display->content['new-12'] = $pane;
-    $display->panels['one_main'][3] = 'new-12';
+    $display->content['new-14'] = $pane;
+    $display->panels['one_main'][3] = 'new-14';
     $pane = new stdClass();
-    $pane->pid = 'new-13';
+    $pane->pid = 'new-15';
     $pane->panel = 'one_main';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_contest_voting_deadline';
@@ -480,10 +564,10 @@ function imagex_contest_panelizer_defaults() {
     $pane->extras = array();
     $pane->position = 4;
     $pane->locks = array();
-    $display->content['new-13'] = $pane;
-    $display->panels['one_main'][4] = 'new-13';
+    $display->content['new-15'] = $pane;
+    $display->panels['one_main'][4] = 'new-15';
     $pane = new stdClass();
-    $pane->pid = 'new-14';
+    $pane->pid = 'new-16';
     $pane->panel = 'one_main';
     $pane->type = 'views_panes';
     $pane->subtype = 'imagex_contest_entries-panel_pane_1';
@@ -521,10 +605,10 @@ function imagex_contest_panelizer_defaults() {
     $pane->extras = array();
     $pane->position = 5;
     $pane->locks = array();
-    $display->content['new-14'] = $pane;
-    $display->panels['one_main'][5] = 'new-14';
+    $display->content['new-16'] = $pane;
+    $display->panels['one_main'][5] = 'new-16';
     $pane = new stdClass();
-    $pane->pid = 'new-15';
+    $pane->pid = 'new-17';
     $pane->panel = 'one_main';
     $pane->type = 'views_panes';
     $pane->subtype = 'imagex_contest_entries-panel_pane_1';
@@ -562,10 +646,41 @@ function imagex_contest_panelizer_defaults() {
     $pane->extras = array();
     $pane->position = 6;
     $pane->locks = array();
-    $display->content['new-15'] = $pane;
-    $display->panels['one_main'][6] = 'new-15';
+    $display->content['new-17'] = $pane;
+    $display->panels['one_main'][6] = 'new-17';
     $pane = new stdClass();
-    $pane->pid = 'new-16';
+    $pane->pid = 'new-18';
+    $pane->panel = 'one_main';
+    $pane->type = 'entity_field';
+    $pane->subtype = 'node:field_addthis';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+      'context' => 'panelizer',
+      'delta_limit' => 0,
+      'delta_offset' => 0,
+      'delta_reversed' => FALSE,
+      'formatter' => 'addthis_basic_button',
+      'formatter_settings' => array(
+        'extra_css' => '',
+        'button_size' => 'small',
+      ),
+      'label' => 'hidden',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 7;
+    $pane->locks = array();
+    $display->content['new-18'] = $pane;
+    $display->panels['one_main'][7] = 'new-18';
+    $pane = new stdClass();
+    $pane->pid = 'new-19';
     $pane->panel = 'one_main';
     $pane->type = 'node_links';
     $pane->subtype = 'node_links';
@@ -587,12 +702,12 @@ function imagex_contest_panelizer_defaults() {
       'css_class' => 'link-wrapper',
     );
     $pane->extras = array();
-    $pane->position = 7;
+    $pane->position = 8;
     $pane->locks = array();
-    $display->content['new-16'] = $pane;
-    $display->panels['one_main'][7] = 'new-16';
+    $display->content['new-19'] = $pane;
+    $display->panels['one_main'][8] = 'new-19';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-9';
+  $display->title_pane = '0';
   $panelizer->display = $display;
   $export['node:contest:default:default'] = $panelizer;
 

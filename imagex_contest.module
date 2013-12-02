@@ -159,27 +159,27 @@ function imagex_contest_contest_entry_links($node) {
   $links = array();
   
   // User access
-  if (!$user->uid) {
-    $links['imagex_contest_add_entry_noaccess'] = array(
-      'title' => t('<a href="@login">Log in</a> or <a href="@register">register</a> to submit an entry to this contest.', array('@login' => url('user/login', array('query' => drupal_get_destination())), '@register' => url('user/register', array('query' => drupal_get_destination())))),
-      'html' => TRUE,
-      'attributes' => array(
-        'title' => t('Log in or register to submit an entry to this contest.'),
-        'class' => array('imagex-contest-add-entry-anonymous'),
-      ),
-    );
-  }
+  if (!user_access('create contest_entry content')) {
+    // Logged in but no access
+    $submit_entry_title = t('You do not have sufficient permissions to submit an entry to this contest.');
+    $submit_entry_class = array('imagex-contest-add-entry-noaccess');
+    
+    // Not logged in
+    if (empty($user->uid)) {
+      $submit_entry_title = t('<a href="@login">Log in</a> or <a href="@register">register</a> to submit an entry to this contest.', array('@login' => url('user/login', array('query' => drupal_get_destination())), '@register' => url('user/register', array('query' => drupal_get_destination()))));
+      $submit_entry_class = array('imagex-contest-add-entry-anonymous');
+    }
   
-  // Logged but no access
-  if ($user->uid && !user_access('create contest_entry content')) {
+    // Give user feedback
     $links['imagex_contest_add_entry_noaccess'] = array(
-      'title' => t('You do not have sufficient permissions to submit an entry to this contest.'),
+      'title' => $submit_entry_title,
       'html' => TRUE,
       'attributes' => array(
-        'class' => array('imagex-contest-add-entry-noaccess'),
+        'title' => $submit_entry_title,
+        'class' => $submit_entry_class,
       ),
-    );
-  }  
+    );  
+  }
   
   // Contest is no longer open to entries
   $node_wrapper = entity_metadata_wrapper('node', $node);
@@ -230,9 +230,9 @@ function imagex_contest_contest_admin_links($node) {
   
   // Contest no longer open
   $contest_node_wrapper = entity_metadata_wrapper('node', $contest_node);
-  $content_entry_open = $contest_node_wrapper->field_contest_entry_open->value();
-  $content_voting_open = $contest_node_wrapper->field_contest_voting_open->value();
-  if (empty($content_entry_open) && empty($content_voting_open)) {
+  $contest_entry_open = $contest_node_wrapper->field_contest_entry_open->value();
+  $contest_voting_open = $contest_node_wrapper->field_contest_voting_open->value();
+  if (empty($contest_entry_open) && empty($contest_voting_open)) {
     return FALSE;
   }  
   
