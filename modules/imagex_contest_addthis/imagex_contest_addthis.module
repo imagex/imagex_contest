@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the Imagex Contest AddThis feature.
- */
-
-include_once 'imagex_contest_addthis.features.inc';
