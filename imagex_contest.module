@@ -15,13 +15,10 @@ function imagex_contest_menu() {
     'page arguments' => array('imagex_contest_contest_admin_form', 2, 3, 4),
     'access callback' => 'imagex_contest_contest_admin_access',
     'access arguments' => array(2, 3, 4),
-    
   );
   
   return $items;
 }
-
-
 
 /**
  * Implements hook_node_view().
