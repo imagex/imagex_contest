@@ -90,5 +90,7 @@ function imagex_contest_voting_features_override_default_overrides() {
     'empty_column' => 0,
   );
 
- return $overrides;
+  features_alter_code('features_overrides', $overrides);
+
+  return $overrides;
 }

@@ -268,6 +268,15 @@ function imagex_contest_views_default_views() {
   $handler->display->display_options['relationships']['uid']['table'] = 'node';
   $handler->display->display_options['relationships']['uid']['field'] = 'uid';
   $handler->display->display_options['relationships']['uid']['required'] = TRUE;
+  /* Relationship: Content: Vote results */
+  $handler->display->display_options['relationships']['votingapi_cache']['id'] = 'votingapi_cache';
+  $handler->display->display_options['relationships']['votingapi_cache']['table'] = 'node';
+  $handler->display->display_options['relationships']['votingapi_cache']['field'] = 'votingapi_cache';
+  $handler->display->display_options['relationships']['votingapi_cache']['votingapi'] = array(
+    'value_type' => 'points',
+    'tag' => 'vote',
+    'function' => 'sum',
+  );
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -275,8 +284,31 @@ function imagex_contest_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  $handler->display->display_options['fields']['title']['element_type'] = 'h3';
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  /* Field: User: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'users';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['relationship'] = 'uid';
+  $handler->display->display_options['fields']['name']['label'] = '';
+  $handler->display->display_options['fields']['name']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['name']['element_wrapper_type'] = 'div';
+  $handler->display->display_options['fields']['name']['element_wrapper_class'] = 'node-author';
+  /* Field: Vote results: Value */
+  $handler->display->display_options['fields']['value']['id'] = 'value';
+  $handler->display->display_options['fields']['value']['table'] = 'votingapi_cache';
+  $handler->display->display_options['fields']['value']['field'] = 'value';
+  $handler->display->display_options['fields']['value']['relationship'] = 'votingapi_cache';
+  $handler->display->display_options['fields']['value']['label'] = '';
+  $handler->display->display_options['fields']['value']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['value']['element_wrapper_type'] = 'div';
+  $handler->display->display_options['fields']['value']['element_wrapper_class'] = 'node-meta node-meta-last';
+  $handler->display->display_options['fields']['value']['empty'] = '0 votes';
+  $handler->display->display_options['fields']['value']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['value']['precision'] = '0';
+  $handler->display->display_options['fields']['value']['format_plural'] = TRUE;
+  $handler->display->display_options['fields']['value']['format_plural_singular'] = '1 vote';
+  $handler->display->display_options['fields']['value']['format_plural_plural'] = '@count votes';
   /* Field: Content: Status */
   $handler->display->display_options['fields']['field_contest_entry_status']['id'] = 'field_contest_entry_status';
   $handler->display->display_options['fields']['field_contest_entry_status']['table'] = 'field_data_field_contest_entry_status';
@@ -306,17 +338,22 @@ function imagex_contest_views_default_views() {
   $handler->display->display_options['fields']['body']['field'] = 'body';
   $handler->display->display_options['fields']['body']['label'] = '';
   $handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
-  /* Field: User: Name */
-  $handler->display->display_options['fields']['name']['id'] = 'name';
-  $handler->display->display_options['fields']['name']['table'] = 'users';
-  $handler->display->display_options['fields']['name']['field'] = 'name';
-  $handler->display->display_options['fields']['name']['relationship'] = 'uid';
-  $handler->display->display_options['fields']['name']['label'] = 'Submitted by';
+  $handler->display->display_options['fields']['body']['type'] = 'text_trimmed';
+  $handler->display->display_options['fields']['body']['settings'] = array(
+    'trim_length' => '100',
+  );
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Sort criterion: Vote results: Value */
+  $handler->display->display_options['sorts']['value']['id'] = 'value';
+  $handler->display->display_options['sorts']['value']['table'] = 'votingapi_cache';
+  $handler->display->display_options['sorts']['value']['field'] = 'value';
+  $handler->display->display_options['sorts']['value']['relationship'] = 'votingapi_cache';
+  $handler->display->display_options['sorts']['value']['order'] = 'DESC';
+  $handler->display->display_options['sorts']['value']['coalesce'] = 1;
   /* Contextual filter: Content: Related Contest (field_contest_entry_contest) */
   $handler->display->display_options['arguments']['field_contest_entry_contest_target_id']['id'] = 'field_contest_entry_contest_target_id';
   $handler->display->display_options['arguments']['field_contest_entry_contest_target_id']['table'] = 'field_data_field_contest_entry_contest';
@@ -405,6 +442,7 @@ function imagex_contest_views_default_views() {
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['autosubmit'] = TRUE;
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '30';
   $handler->display->display_options['pager']['options']['offset'] = '0';
@@ -412,24 +450,45 @@ function imagex_contest_views_default_views() {
   $handler->display->display_options['pager']['options']['quantity'] = '9';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
+    'views_bulk_operations' => 'views_bulk_operations',
     'title' => 'title',
+    'name' => 'title',
     'body' => 'title',
+    'field_contest_entry_status' => 'field_contest_entry_status',
     'delete_node' => 'view_node',
     'edit_node' => 'view_node',
     'view_node' => 'view_node',
+    'value' => 'value',
   );
   $handler->display->display_options['style_options']['default'] = '-1';
   $handler->display->display_options['style_options']['info'] = array(
+    'views_bulk_operations' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
     'title' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => 'views-align-left',
+      'separator' => '<br />',
+      'empty_column' => 0,
+    ),
+    'name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
     'body' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_contest_entry_status' => array(
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -449,6 +508,13 @@ function imagex_contest_views_default_views() {
       'separator' => ' | ',
       'empty_column' => 0,
     ),
+    'value' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => 'views-align-center',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
   );
   $handler->display->display_options['style_options']['sticky'] = TRUE;
   /* Relationship: Content: Author */
@@ -456,6 +522,15 @@ function imagex_contest_views_default_views() {
   $handler->display->display_options['relationships']['uid']['table'] = 'node';
   $handler->display->display_options['relationships']['uid']['field'] = 'uid';
   $handler->display->display_options['relationships']['uid']['required'] = TRUE;
+  /* Relationship: Content: Vote results */
+  $handler->display->display_options['relationships']['votingapi_cache']['id'] = 'votingapi_cache';
+  $handler->display->display_options['relationships']['votingapi_cache']['table'] = 'node';
+  $handler->display->display_options['relationships']['votingapi_cache']['field'] = 'votingapi_cache';
+  $handler->display->display_options['relationships']['votingapi_cache']['votingapi'] = array(
+    'value_type' => 'points',
+    'tag' => 'vote',
+    'function' => 'sum',
+  );
   /* Field: Bulk operations: Content */
   $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
   $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'node';
@@ -642,19 +717,23 @@ function imagex_contest_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = 'Entry';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  /* Field: User: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'users';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['relationship'] = 'uid';
+  $handler->display->display_options['fields']['name']['label'] = 'Submitted by';
+  $handler->display->display_options['fields']['name']['element_label_colon'] = FALSE;
   /* Field: Content: Body */
   $handler->display->display_options['fields']['body']['id'] = 'body';
   $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
   $handler->display->display_options['fields']['body']['field'] = 'body';
   $handler->display->display_options['fields']['body']['label'] = '';
   $handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
-  /* Field: User: Name */
-  $handler->display->display_options['fields']['name']['id'] = 'name';
-  $handler->display->display_options['fields']['name']['table'] = 'users';
-  $handler->display->display_options['fields']['name']['field'] = 'name';
-  $handler->display->display_options['fields']['name']['relationship'] = 'uid';
-  $handler->display->display_options['fields']['name']['label'] = 'Author';
-  $handler->display->display_options['fields']['name']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['body']['type'] = 'text_summary_or_trimmed';
+  $handler->display->display_options['fields']['body']['settings'] = array(
+    'trim_length' => '100',
+  );
   /* Field: Content: Status */
   $handler->display->display_options['fields']['field_contest_entry_status']['id'] = 'field_contest_entry_status';
   $handler->display->display_options['fields']['field_contest_entry_status']['table'] = 'field_data_field_contest_entry_status';
@@ -662,7 +741,7 @@ function imagex_contest_views_default_views() {
   $handler->display->display_options['fields']['field_contest_entry_status']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_contest_entry_status']['empty'] = '-';
   $handler->display->display_options['fields']['field_contest_entry_status']['delta_offset'] = '0';
-  $handler->display->display_options['fields']['field_contest_entry_status']['separator'] = ' + ';
+  $handler->display->display_options['fields']['field_contest_entry_status']['separator'] = ',  ';
   /* Field: Content: Delete link */
   $handler->display->display_options['fields']['delete_node']['id'] = 'delete_node';
   $handler->display->display_options['fields']['delete_node']['table'] = 'views_entity_node';
@@ -684,6 +763,15 @@ function imagex_contest_views_default_views() {
   $handler->display->display_options['fields']['view_node']['label'] = 'Operation';
   $handler->display->display_options['fields']['view_node']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['view_node']['text'] = 'View';
+  /* Field: Vote results: Value */
+  $handler->display->display_options['fields']['value']['id'] = 'value';
+  $handler->display->display_options['fields']['value']['table'] = 'votingapi_cache';
+  $handler->display->display_options['fields']['value']['field'] = 'value';
+  $handler->display->display_options['fields']['value']['relationship'] = 'votingapi_cache';
+  $handler->display->display_options['fields']['value']['label'] = 'Votes';
+  $handler->display->display_options['fields']['value']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['value']['format_plural_singular'] = '1 vote';
+  $handler->display->display_options['fields']['value']['format_plural_plural'] = '@count votes';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -718,7 +806,7 @@ function imagex_contest_views_default_views() {
   $handler->display->display_options['filters']['field_contest_entry_status_value']['field'] = 'field_contest_entry_status_value';
   $handler->display->display_options['filters']['field_contest_entry_status_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_contest_entry_status_value']['expose']['operator_id'] = 'field_contest_entry_status_value_op';
-  $handler->display->display_options['filters']['field_contest_entry_status_value']['expose']['label'] = 'Status (Finalist or Winner)';
+  $handler->display->display_options['filters']['field_contest_entry_status_value']['expose']['label'] = 'Status';
   $handler->display->display_options['filters']['field_contest_entry_status_value']['expose']['operator'] = 'field_contest_entry_status_value_op';
   $handler->display->display_options['filters']['field_contest_entry_status_value']['expose']['identifier'] = 'field_contest_entry_status_value';
   $handler->display->display_options['filters']['field_contest_entry_status_value']['expose']['remember_roles'] = array(
@@ -754,6 +842,8 @@ function imagex_contest_views_default_views() {
     ),
   );
   $export['imagex_contest_entries_admin'] = $view;
+
+  features_alter_code('views_view', $export);
 
   return $export;
 }

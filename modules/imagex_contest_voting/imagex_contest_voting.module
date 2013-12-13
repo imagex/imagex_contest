@@ -45,7 +45,7 @@ function imagex_contest_voting_views_bulk_operations_form_alter(&$form, &$form_s
     // VBO initial form/view 
     if ($form_state['step'] == 'views_form_views_form') {
       // If $_GET['entry'] preselect in vote form
-      if ($_GET['entry'] && !empty($form['views_bulk_operations'])) {
+      if (!empty($_GET['entry']) && !empty($form['views_bulk_operations'])) {
         foreach ($form['views_bulk_operations'] as $k => $entry) {
           if ($entry['#return_value'] == $_GET['entry']) {
             // Match = preselect
@@ -97,9 +97,9 @@ function imagex_contest_voting_user_vote_access($node) {
     return array(
       'imagex_contest_voting_add_vote' => array(
         'title' => $vote_link_title,
-        'hhtml' => TRUE,
+        'html' => TRUE,
         'attributes' => array(
-          'title' => $vote_link_title,
+          'title' => strip_tags($vote_link_title),
           'class' => $vote_link_class,
         ),
       ),
@@ -107,6 +107,7 @@ function imagex_contest_voting_user_vote_access($node) {
   }
   
   // 2. Check related contest
+  $contest_node = NULL;
   if ($node->type == 'contest') {
     $contest_node = $node;
     $vote_link_title = t('Cast your vote now!');
@@ -115,7 +116,14 @@ function imagex_contest_voting_user_vote_access($node) {
   }
   else {
     // Is a contest entry node so need to load contest data
-    $contest_node = $node->field_contest_entry_contest[LANGUAGE_NONE][0]['entity'];
+    if (!empty($node->field_contest_entry_contest[LANGUAGE_NONE][0]['entity'])) {
+      // If viewing a content entry we get full entity
+      $contest_node = $node->field_contest_entry_contest[LANGUAGE_NONE][0]['entity'];
+    }
+    else {
+      // Otherwise we just get the entity id
+      $contest_node = entity_load($node->field_contest_entry_contest[LANGUAGE_NONE][0]['target_id']);
+    }
     $vote_link_title = t('Cast your vote for this entry now!');
     $vote_link_contest_nid = $contest_node->nid;
     $query = array('entry' => $node->nid, 'destination' => 'node/' . $contest_node->nid .'/cast-vote');
@@ -128,6 +136,9 @@ function imagex_contest_voting_user_vote_access($node) {
   
   // Load meta data wrapper
   $contest_node_wrapper = entity_metadata_wrapper('node', $contest_node);
+  if (empty($contest_node_wrapper->field_contest_voting_open)) {
+    return FALSE;
+  }
   $contest_voting_open = $contest_node_wrapper->field_contest_voting_open->value();
   
   // Contest open for voting?

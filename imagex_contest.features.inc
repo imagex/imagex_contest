@@ -48,5 +48,8 @@ function imagex_contest_node_info() {
       'help' => '',
     ),
   );
+
+  features_alter_code('node', $items);
+
   return $items;
 }

@@ -143,8 +143,10 @@ function imagex_contest_preprocess_node(&$vars) {
   // Add class to contest entries if finalist or winner
   if ($node->type == 'contest_entry') {
     $node_wrapper = entity_metadata_wrapper('node', $node);
-    foreach ($node_wrapper->field_contest_entry_status->getIterator() as $delta => $value) {
-      $vars['classes_array'][] = 'node-contest-entry-' . trim(strtolower($value->label()));
+    if (!empty($node_wrapper->field_contest_entry_status)) {
+      foreach ($node_wrapper->field_contest_entry_status->getIterator() as $delta => $value) {
+        $vars['classes_array'][] = 'node-contest-entry-' . trim(strtolower($value->label()));
+      }
     }
   }
 }
@@ -175,24 +177,26 @@ function imagex_contest_contest_entry_links($node) {
       'title' => $submit_entry_title,
       'html' => TRUE,
       'attributes' => array(
-        'title' => $submit_entry_title,
+        'title' => strip_tags($submit_entry_title),
         'class' => $submit_entry_class,
       ),
     );  
   }
   
   // Contest is no longer open to entries
-  $node_wrapper = entity_metadata_wrapper('node', $node);
-  $content_open_entry = $node_wrapper->field_contest_entry_open->value();
-  if (empty($content_open_entry)) {
-    $links['imagex_contest_add_entry_noaccess'] = array(
-      'title' => t('This contest is no longer open to entries.'),
-      'html' => TRUE,
-      'attributes' => array(
-        'title' => t('This contest is no longer open to entries'),
-        'class' => array('imagex-contest-add-entry-closed'),
-      ),
-    );
+  $node_wrapper = entity_metadata_wrapper('node', $node);  
+  if (!empty($node_wrapper->field_contest_entry_open)) {
+    $content_open_entry = $node_wrapper->field_contest_entry_open->value();
+    if (empty($content_open_entry)) {
+      $links['imagex_contest_add_entry_noaccess'] = array(
+        'title' => t('This contest is no longer open to entries.'),
+        'html' => TRUE,
+        'attributes' => array(
+          'title' => t('This contest is no longer open to entries'),
+          'class' => array('imagex-contest-add-entry-closed'),
+        ),
+      );
+    }
   }
   
   // Default, contest open and ready
@@ -220,16 +224,33 @@ function imagex_contest_contest_admin_links($node) {
   $links = array();
 
   // Get related contest data
-  $contest_node = $node->field_contest_entry_contest[LANGUAGE_NONE][0]['entity'];
+  if (!empty($node->field_contest_entry_contest[LANGUAGE_NONE][0]['entity'])) {
+    // Viewing contest entry comes will full entity loaded
+    $contest_node = $node->field_contest_entry_contest[LANGUAGE_NONE][0]['entity'];
+  }
+  else {
+    // Otherwise we just get the entity id
+    $contest_node = entity_load($node->field_contest_entry_contest[LANGUAGE_NONE][0]['target_id']);
+  }
   $contest_entry_node = $node;
+  
+  // Both contest & entry nodes are required
+  if (empty($contest_node) || empty($contest_entry_node)) {
+    return FALSE;
+  }
   
   // User access
   if (!imagex_contest_contest_admin_access($contest_node, $contest_entry_node)) {
     return FALSE;
   }
   
-  // Contest no longer open
+  // Load Contest status, metadata_wrapper throws errors without property checking
   $contest_node_wrapper = entity_metadata_wrapper('node', $contest_node);
+  if (empty($contest_node_wrapper->field_contest_entry_open) || empty($contest_node_wrapper->field_contest_voting_open)) {
+    return FALSE;
+  }
+  
+  // Contest no longer open
   $contest_entry_open = $contest_node_wrapper->field_contest_entry_open->value();
   $contest_voting_open = $contest_node_wrapper->field_contest_voting_open->value();
   if (empty($contest_entry_open) && empty($contest_voting_open)) {
@@ -242,6 +263,10 @@ function imagex_contest_contest_admin_links($node) {
     2 => 'winner',
   );
   $contest_entry_node_wrapper = entity_metadata_wrapper('node', $contest_entry_node);
+  if (empty($contest_entry_node_wrapper->field_contest_entry_status)) {
+    return FALSE;
+  }  
+  
   $contest_entry_status = $contest_entry_node_wrapper->field_contest_entry_status->value();
   if (!empty($contest_entry_status)) {
     // Entry already finalist or winner, kill the 
@@ -258,8 +283,8 @@ function imagex_contest_contest_admin_links($node) {
         'href' => 'contest/select-entry/' . $contest_node->nid . '/' . $contest_entry_node->nid . '/' . $status,
         'query' => drupal_get_destination(),
         'attributes' => array(
-          'title' => t('Submit your entry into this contest now!'),
-          'class' => array('imagex-contest-contest-entry-admin-' . $status),
+          'title' => t('Select Entry As @status', array('@status' => drupal_ucfirst($status))),
+          'class' => array('imagex-contest-contest-entry-admin imagex-contest-contest-entry-admin-' . $status),
         ),
       );
     }
@@ -273,10 +298,10 @@ function imagex_contest_contest_admin_links($node) {
  */
 function imagex_contest_contest_admin_access($contest_node, $contest_entry_node, $status =  '') {
   global $user;
-  if ($user->uid != $contest_node->uid && !user_access('create contest_entry content')  && !user_access('administer nodes')) {
-    return FALSE;
+  if (($user->uid == $contest_node->uid && (user_access('create contest_entry content')  || user_access('administer nodes'))) || user_access('administer nodes')) {
+    return TRUE;
   }
-  return TRUE;
+  return FALSE;
 }
 
 /**

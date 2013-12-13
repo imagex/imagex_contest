@@ -133,7 +133,10 @@ function imagex_contest_voting_default_page_manager_pages() {
     $pane->style = array(
       'settings' => NULL,
     );
-    $pane->css = array();
+    $pane->css = array(
+      'css_id' => '',
+      'css_class' => 'standard-bean standard-bean-full',
+    );
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
@@ -168,7 +171,10 @@ function imagex_contest_voting_default_page_manager_pages() {
     $pane->style = array(
       'settings' => NULL,
     );
-    $pane->css = array();
+    $pane->css = array(
+      'css_id' => '',
+      'css_class' => 'standard-bean standard-bean-full',
+    );
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
@@ -179,6 +185,8 @@ function imagex_contest_voting_default_page_manager_pages() {
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['imagex_contest_vote'] = $page;
+
+  features_alter_code('page_manager_pages', $pages);
 
   return $pages;
 

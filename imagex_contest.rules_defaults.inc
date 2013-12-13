@@ -78,6 +78,7 @@ function imagex_contest_default_rules_configuration() {
       "PLUGIN" : "rule set",
       "TAGS" : [ "imagex_contest" ],
       "REQUIRES" : [ "rules" ],
+      "ACCESS_EXPOSED" : "1",
       "USES VARIABLES" : {
         "entry_node" : { "label" : "Entry Node", "type" : "node" },
         "notify_entry_author" : { "label" : "Notify Entry Author", "type" : "integer" }
@@ -143,6 +144,7 @@ function imagex_contest_default_rules_configuration() {
       "PLUGIN" : "rule set",
       "TAGS" : [ "imagex_contest" ],
       "REQUIRES" : [ "rules" ],
+      "ACCESS_EXPOSED" : "1",
       "USES VARIABLES" : {
         "entry_node" : { "label" : "Entry Node", "type" : "node" },
         "notify_entry_author" : { "label" : "Notify Entry Author", "type" : "integer" }
@@ -281,5 +283,8 @@ function imagex_contest_default_rules_configuration() {
       ]
     }
   }');
+
+  features_alter_code('rules_config', $items);
+
   return $items;
 }

@@ -59,18 +59,10 @@ function imagex_contest_permissions_user_default_permissions() {
     'module' => 'panelizer',
   );
 
-  // Exported permission: 'administer voting api'.
-  $permissions['administer voting api'] = array(
-    'name' => 'administer voting api',
-    'roles' => array(),
-    'module' => 'votingapi',
-  );
-
   // Exported permission: 'create contest content'.
   $permissions['create contest content'] = array(
     'name' => 'create contest content',
     'roles' => array(
-      'Administrator' => 'Administrator',
       'Content Administrator' => 'Content Administrator',
       'Content Creator' => 'Content Creator',
       'Content Manager' => 'Content Manager',
@@ -99,7 +91,6 @@ function imagex_contest_permissions_user_default_permissions() {
   $permissions['delete any contest_entry content'] = array(
     'name' => 'delete any contest_entry content',
     'roles' => array(
-      'Administrator' => 'Administrator',
       'Content Administrator' => 'Content Administrator',
       'Content Manager' => 'Content Manager',
       'Content Moderator' => 'Content Moderator',
@@ -111,7 +102,6 @@ function imagex_contest_permissions_user_default_permissions() {
   $permissions['delete own contest content'] = array(
     'name' => 'delete own contest content',
     'roles' => array(
-      'Administrator' => 'Administrator',
       'Content Administrator' => 'Content Administrator',
       'Content Manager' => 'Content Manager',
       'Content Moderator' => 'Content Moderator',
@@ -123,7 +113,6 @@ function imagex_contest_permissions_user_default_permissions() {
   $permissions['delete own contest_entry content'] = array(
     'name' => 'delete own contest_entry content',
     'roles' => array(
-      'Administrator' => 'Administrator',
       'Content Administrator' => 'Content Administrator',
       'Content Creator' => 'Content Creator',
       'Content Manager' => 'Content Manager',
@@ -137,7 +126,6 @@ function imagex_contest_permissions_user_default_permissions() {
   $permissions['edit any contest content'] = array(
     'name' => 'edit any contest content',
     'roles' => array(
-      'Administrator' => 'Administrator',
       'Content Administrator' => 'Content Administrator',
       'Content Manager' => 'Content Manager',
       'Content Moderator' => 'Content Moderator',
@@ -149,7 +137,6 @@ function imagex_contest_permissions_user_default_permissions() {
   $permissions['edit any contest_entry content'] = array(
     'name' => 'edit any contest_entry content',
     'roles' => array(
-      'Administrator' => 'Administrator',
       'Content Administrator' => 'Content Administrator',
       'Content Manager' => 'Content Manager',
       'Content Moderator' => 'Content Moderator',
@@ -161,7 +148,6 @@ function imagex_contest_permissions_user_default_permissions() {
   $permissions['edit own contest content'] = array(
     'name' => 'edit own contest content',
     'roles' => array(
-      'Administrator' => 'Administrator',
       'Content Administrator' => 'Content Administrator',
       'Content Creator' => 'Content Creator',
       'Content Manager' => 'Content Manager',
@@ -187,6 +173,8 @@ function imagex_contest_permissions_user_default_permissions() {
     ),
     'module' => 'imagex_contest_voting',
   );
+
+  features_alter_code('user_permission', $permissions);
 
   return $permissions;
 }

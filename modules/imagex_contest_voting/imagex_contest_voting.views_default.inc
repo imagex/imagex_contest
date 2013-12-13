@@ -24,7 +24,8 @@ function imagex_contest_voting_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Vote Now';
   $handler->display->display_options['use_more_always'] = FALSE;
-  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'vote on contest entries';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
@@ -33,6 +34,13 @@ function imagex_contest_voting_views_default_views() {
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
   $handler->display->display_options['row_options']['hide_empty'] = TRUE;
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'No entries have been selected for voting just yet.';
+  $handler->display->display_options['empty']['area']['format'] = 'full_html';
   /* Relationship: Content: Author */
   $handler->display->display_options['relationships']['uid']['id'] = 'uid';
   $handler->display->display_options['relationships']['uid']['table'] = 'node';
@@ -263,14 +271,16 @@ function imagex_contest_voting_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  $handler->display->display_options['fields']['title']['element_type'] = 'h4';
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   /* Field: User: Name */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'users';
   $handler->display->display_options['fields']['name']['field'] = 'name';
   $handler->display->display_options['fields']['name']['relationship'] = 'uid';
-  $handler->display->display_options['fields']['name']['label'] = 'Submitted by';
+  $handler->display->display_options['fields']['name']['label'] = '';
+  $handler->display->display_options['fields']['name']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['name']['element_wrapper_type'] = 'span';
+  $handler->display->display_options['fields']['name']['element_wrapper_class'] = 'node-author';
   /* Field: Vote results: Value */
   $handler->display->display_options['fields']['value']['id'] = 'value';
   $handler->display->display_options['fields']['value']['table'] = 'votingapi_cache';
@@ -278,16 +288,12 @@ function imagex_contest_voting_views_default_views() {
   $handler->display->display_options['fields']['value']['relationship'] = 'votingapi_cache';
   $handler->display->display_options['fields']['value']['label'] = '';
   $handler->display->display_options['fields']['value']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['value']['element_wrapper_type'] = 'span';
+  $handler->display->display_options['fields']['value']['element_wrapper_class'] = 'node-meta node-meta-last';
   $handler->display->display_options['fields']['value']['precision'] = '0';
   $handler->display->display_options['fields']['value']['format_plural'] = TRUE;
   $handler->display->display_options['fields']['value']['format_plural_singular'] = '1 vote';
   $handler->display->display_options['fields']['value']['format_plural_plural'] = '@count votes';
-  /* Field: Vote results: Tag */
-  $handler->display->display_options['fields']['tag']['id'] = 'tag';
-  $handler->display->display_options['fields']['tag']['table'] = 'votingapi_cache';
-  $handler->display->display_options['fields']['tag']['field'] = 'tag';
-  $handler->display->display_options['fields']['tag']['relationship'] = 'votingapi_cache';
-  $handler->display->display_options['fields']['tag']['exclude'] = TRUE;
   /* Sort criterion: Vote results: Value */
   $handler->display->display_options['sorts']['value']['id'] = 'value';
   $handler->display->display_options['sorts']['value']['table'] = 'votingapi_cache';
@@ -405,6 +411,7 @@ function imagex_contest_voting_views_default_views() {
   $handler->display->display_options['header']['area']['field'] = 'area';
   $handler->display->display_options['header']['area']['content'] = 'You have already voted on this contest, your current vote is shown below. Voting again will remove your current vote.';
   $handler->display->display_options['header']['area']['format'] = 'full_html';
+  $handler->display->display_options['defaults']['empty'] = FALSE;
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   /* Relationship: Content: Author */
   $handler->display->display_options['relationships']['uid']['id'] = 'uid';
@@ -438,14 +445,16 @@ function imagex_contest_voting_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  $handler->display->display_options['fields']['title']['element_type'] = 'h4';
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   /* Field: User: Name */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'users';
   $handler->display->display_options['fields']['name']['field'] = 'name';
   $handler->display->display_options['fields']['name']['relationship'] = 'uid';
-  $handler->display->display_options['fields']['name']['label'] = 'Submitted by';
+  $handler->display->display_options['fields']['name']['label'] = '';
+  $handler->display->display_options['fields']['name']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['name']['element_wrapper_type'] = 'span';
+  $handler->display->display_options['fields']['name']['element_wrapper_class'] = 'node-author';
   /* Field: Vote results: Value */
   $handler->display->display_options['fields']['value']['id'] = 'value';
   $handler->display->display_options['fields']['value']['table'] = 'votingapi_cache';
@@ -453,6 +462,8 @@ function imagex_contest_voting_views_default_views() {
   $handler->display->display_options['fields']['value']['relationship'] = 'votingapi_cache';
   $handler->display->display_options['fields']['value']['label'] = '';
   $handler->display->display_options['fields']['value']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['value']['element_wrapper_type'] = 'span';
+  $handler->display->display_options['fields']['value']['element_wrapper_class'] = 'node-meta node-meta-last';
   $handler->display->display_options['fields']['value']['precision'] = '0';
   $handler->display->display_options['fields']['value']['format_plural'] = TRUE;
   $handler->display->display_options['fields']['value']['format_plural_singular'] = '1 vote';
@@ -470,6 +481,8 @@ function imagex_contest_voting_views_default_views() {
     ),
   );
   $export['imagex_contest_entry_voting'] = $view;
+
+  features_alter_code('views_view', $export);
 
   return $export;
 }
