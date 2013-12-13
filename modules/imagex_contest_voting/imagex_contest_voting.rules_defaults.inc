@@ -40,5 +40,8 @@ function imagex_contest_voting_default_rules_configuration() {
       ]
     }
   }');
+
+  features_alter_code('rules_config', $items);
+
   return $items;
 }

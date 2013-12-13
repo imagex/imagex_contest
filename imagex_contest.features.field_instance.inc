@@ -803,5 +803,7 @@ If a deadline date is entered the "Open For Voting" checkbox will automatically 
   t('Upload or reference to any media or files related to your entry.');
   t('Voting Deadline');
 
+  features_alter_code('field_instance', $field_instances);
+
   return $field_instances;
 }

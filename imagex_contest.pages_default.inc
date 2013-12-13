@@ -113,16 +113,17 @@ function imagex_contest_default_page_manager_pages() {
       'use_pager' => 1,
       'pager_id' => '0',
       'items_per_page' => '30',
-      'path' => '',
+      'path' => 'node/%node:nid/contest',
       'fields_override' => array(
         'views_bulk_operations' => 1,
         'title' => 1,
-        'body' => 1,
         'name' => 1,
+        'body' => 1,
         'field_contest_entry_status' => 1,
         'delete_node' => 1,
         'edit_node' => 1,
         'view_node' => 1,
+        'value' => 1,
       ),
       'exposed' => array(
         'field_contest_entry_status_value' => 'All',
@@ -137,7 +138,10 @@ function imagex_contest_default_page_manager_pages() {
     $pane->style = array(
       'settings' => NULL,
     );
-    $pane->css = array();
+    $pane->css = array(
+      'css_id' => '',
+      'css_class' => 'pane-title-page-title',
+    );
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
@@ -148,6 +152,8 @@ function imagex_contest_default_page_manager_pages() {
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['imagex_contest_overview'] = $page;
+
+  features_alter_code('page_manager_pages', $pages);
 
   return $pages;
 

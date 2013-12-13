@@ -18,7 +18,7 @@ function imagex_contest_field_default_field_bases() {
     'entity_types' => array(),
     'field_name' => 'field_contest_entry_contest',
     'field_permissions' => array(
-      'type' => 1,
+      'type' => 2,
     ),
     'foreign keys' => array(
       'node' => array(
@@ -308,6 +308,8 @@ function imagex_contest_field_default_field_bases() {
     'translatable' => 0,
     'type' => 'list_boolean',
   );
+
+  features_alter_code('field_base', $field_bases);
 
   return $field_bases;
 }
