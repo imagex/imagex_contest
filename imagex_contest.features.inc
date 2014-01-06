@@ -34,7 +34,7 @@ function imagex_contest_node_info() {
     'contest' => array(
       'name' => t('Contest'),
       'base' => 'node_content',
-      'description' => t('A contest to which users can submit contest entries.'),
+      'description' => t('Use <em>contest</em> to create a new community driven contest.'),
       'has_title' => '1',
       'title_label' => t('Title'),
       'help' => '',
@@ -42,7 +42,7 @@ function imagex_contest_node_info() {
     'contest_entry' => array(
       'name' => t('Contest Entry'),
       'base' => 'node_content',
-      'description' => t('An entry into a contest.'),
+      'description' => t('Use <em>contest entry</em> to submit an entry to an existing contest.'),
       'has_title' => '1',
       'title_label' => t('Title'),
       'help' => '',
