@@ -529,7 +529,7 @@ function imagex_contest_panelizer_defaults() {
       'anon_links' => 1,
       'context' => 'panelizer',
       'override_title' => 1,
-      'override_title_text' => '',
+      'override_title_text' => 'Comments',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -1401,7 +1401,7 @@ function imagex_contest_panelizer_defaults() {
       'anon_links' => 1,
       'context' => 'panelizer',
       'override_title' => 1,
-      'override_title_text' => '',
+      'override_title_text' => 'Comments',
     );
     $pane->cache = array();
     $pane->style = array(
