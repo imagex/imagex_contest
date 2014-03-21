@@ -30,8 +30,7 @@ function imagex_contest_field_default_field_instances() {
     'label' => 'Comment',
     'required' => TRUE,
     'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'text_processing' => 0,
+      'text_processing' => 1,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -64,8 +63,7 @@ function imagex_contest_field_default_field_instances() {
     'label' => 'Comment',
     'required' => TRUE,
     'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'text_processing' => 0,
+      'text_processing' => 1,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -140,7 +138,6 @@ function imagex_contest_field_default_field_instances() {
         ),
       ),
       'display_summary' => 1,
-      'entity_translation_sync' => FALSE,
       'text_processing' => 1,
       'user_register_form' => FALSE,
     ),
@@ -201,7 +198,6 @@ If a deadline date is entered the "Open To Entries" checkbox will automatically 
       'default_value2' => 'same',
       'default_value_code' => '',
       'default_value_code2' => '',
-      'entity_translation_sync' => FALSE,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -257,7 +253,6 @@ If a deadline date is entered the "Open To Entries" checkbox will automatically 
     'label' => 'Open For Entries',
     'required' => 0,
     'settings' => array(
-      'entity_translation_sync' => FALSE,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -304,7 +299,6 @@ If a deadline date is entered the "Open To Entries" checkbox will automatically 
     'required' => 0,
     'settings' => array(
       'description_field' => 0,
-      'entity_translation_sync' => FALSE,
       'file_directory' => 'contest/media',
       'file_extensions' => 'jpg jpeg gif png txt doc docx xls xlsx pdf ppt pptx pps ppsx odt ods odp mp3 mov mp4 m4a m4v mpeg avi ogg oga ogv weba webp webm',
       'max_filesize' => '',
@@ -403,7 +397,6 @@ If a deadline date is entered the "Open To Entries" checkbox will automatically 
           ),
         ),
       ),
-      'entity_translation_sync' => FALSE,
       'text_processing' => 1,
       'user_register_form' => FALSE,
     ),
@@ -463,7 +456,6 @@ If a deadline date is entered the "Open For Voting" checkbox will automatically 
       'default_value2' => 'same',
       'default_value_code' => '',
       'default_value_code2' => '',
-      'entity_translation_sync' => FALSE,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -519,7 +511,6 @@ If a deadline date is entered the "Open For Voting" checkbox will automatically 
     'label' => 'Open For Voting',
     'required' => 0,
     'settings' => array(
-      'entity_translation_sync' => FALSE,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -596,7 +587,6 @@ If a deadline date is entered the "Open For Voting" checkbox will automatically 
         ),
       ),
       'display_summary' => 0,
-      'entity_translation_sync' => FALSE,
       'text_processing' => 1,
       'user_register_form' => FALSE,
     ),
@@ -658,7 +648,6 @@ If a deadline date is entered the "Open For Voting" checkbox will automatically 
           'status' => 1,
         ),
       ),
-      'entity_translation_sync' => FALSE,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -705,7 +694,6 @@ If a deadline date is entered the "Open For Voting" checkbox will automatically 
     'required' => 0,
     'settings' => array(
       'description_field' => 0,
-      'entity_translation_sync' => FALSE,
       'file_directory' => 'contest/entry/media',
       'file_extensions' => 'jpg jpeg gif png txt doc docx xls xlsx pdf ppt pptx pps ppsx odt ods odp mp3 mov mp4 m4a m4v mpeg avi ogg oga ogv weba webp webm',
       'max_filesize' => '',
@@ -778,7 +766,6 @@ If a deadline date is entered the "Open For Voting" checkbox will automatically 
     'label' => 'Status',
     'required' => 0,
     'settings' => array(
-      'entity_translation_sync' => FALSE,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
