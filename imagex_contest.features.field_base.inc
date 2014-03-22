@@ -35,7 +35,7 @@ function imagex_contest_field_default_field_bases() {
     ),
     'locked' => 0,
     'module' => 'entityreference',
-    'settings' => array(
+    'settings' => array(      
       'handler' => 'base',
       'handler_settings' => array(
         'behaviors' => array(
