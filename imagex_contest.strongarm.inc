@@ -14,7 +14,7 @@ function imagex_contest_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'additional_settings__active_tab_contest';
-  $strongarm->value = 'edit-panelizer';
+  $strongarm->value = 'edit-workflow';
   $export['additional_settings__active_tab_contest'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -209,10 +209,16 @@ function imagex_contest_strongarm() {
           'weight' => '0',
         ),
         'path' => array(
-          'weight' => '11',
+          'weight' => '10',
         ),
         'redirect' => array(
-          'weight' => '10',
+          'weight' => '9',
+        ),
+        'workbench_access' => array(
+          'weight' => '12',
+        ),
+        'badges' => array(
+          'weight' => '11',
         ),
       ),
       'display' => array(),
@@ -275,6 +281,13 @@ function imagex_contest_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'language_content_type_contest';
+  $strongarm->value = '0';
+  $export['language_content_type_contest'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'menu_options_contest';
   $strongarm->value = array(
     0 => 'main-menu',
@@ -309,8 +322,10 @@ function imagex_contest_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'node_options_contest';
   $strongarm->value = array(
-    0 => 'status',
-    1 => 'revision',
+    0 => 'promote',
+    1 => 'sticky',
+    2 => 'moderation',
+    3 => 'revision',
   );
   $export['node_options_contest'] = $strongarm;
 
@@ -369,32 +384,7 @@ function imagex_contest_strongarm() {
         'default' => 1,
         'choice' => 1,
       ),
-      'full' => array(
-        'status' => 0,
-        'default' => 0,
-        'choice' => 0,
-      ),
       'teaser' => array(
-        'status' => 0,
-        'default' => 0,
-        'choice' => 0,
-      ),
-      'rss' => array(
-        'status' => 0,
-        'default' => 0,
-        'choice' => 0,
-      ),
-      'diff_standard' => array(
-        'status' => 0,
-        'default' => 0,
-        'choice' => 0,
-      ),
-      'search_result_search_api' => array(
-        'status' => 0,
-        'default' => 0,
-        'choice' => 0,
-      ),
-      'token' => array(
         'status' => 0,
         'default' => 0,
         'choice' => 0,
@@ -587,7 +577,7 @@ function imagex_contest_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'workbench_access_node_type_contest';
-  $strongarm->value = 0;
+  $strongarm->value = 1;
   $export['workbench_access_node_type_contest'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -601,7 +591,7 @@ function imagex_contest_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'workbench_moderation_default_state_contest';
-  $strongarm->value = 'draft';
+  $strongarm->value = 'needs_review';
   $export['workbench_moderation_default_state_contest'] = $strongarm;
 
   $strongarm = new stdClass();

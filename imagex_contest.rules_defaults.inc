@@ -12,6 +12,7 @@ function imagex_contest_default_rules_configuration() {
   $items['rules_imagex_contest_close_entries'] = entity_import('rules_config', '{ "rules_imagex_contest_close_entries" : {
       "LABEL" : "ImageX Contest Close Entries",
       "PLUGIN" : "rule set",
+      "OWNER" : "rules",
       "TAGS" : [ "imagex_contest" ],
       "REQUIRES" : [ "rules" ],
       "USES VARIABLES" : { "node" : { "label" : "Node", "type" : "node" } },
@@ -44,6 +45,7 @@ function imagex_contest_default_rules_configuration() {
   $items['rules_imagex_contest_close_voting'] = entity_import('rules_config', '{ "rules_imagex_contest_close_voting" : {
       "LABEL" : "ImageX Contest Close Voting",
       "PLUGIN" : "rule set",
+      "OWNER" : "rules",
       "TAGS" : [ "imagex_contest" ],
       "REQUIRES" : [ "rules" ],
       "USES VARIABLES" : { "node" : { "label" : "Node", "type" : "node" } },
@@ -76,6 +78,7 @@ function imagex_contest_default_rules_configuration() {
   $items['rules_imagex_contest_entry_as_finalist'] = entity_import('rules_config', '{ "rules_imagex_contest_entry_as_finalist" : {
       "LABEL" : "ImageX Contest Entry As Finalist",
       "PLUGIN" : "rule set",
+      "OWNER" : "rules",
       "TAGS" : [ "imagex_contest" ],
       "REQUIRES" : [ "rules" ],
       "ACCESS_EXPOSED" : "1",
@@ -142,6 +145,7 @@ function imagex_contest_default_rules_configuration() {
   $items['rules_imagex_contest_entry_as_winner'] = entity_import('rules_config', '{ "rules_imagex_contest_entry_as_winner" : {
       "LABEL" : "ImageX Contest Entry As Winner",
       "PLUGIN" : "rule set",
+      "OWNER" : "rules",
       "TAGS" : [ "imagex_contest" ],
       "REQUIRES" : [ "rules" ],
       "ACCESS_EXPOSED" : "1",
@@ -204,9 +208,10 @@ function imagex_contest_default_rules_configuration() {
   $items['rules_imagex_contest_entry_deadline'] = entity_import('rules_config', '{ "rules_imagex_contest_entry_deadline" : {
       "LABEL" : "ImageX Contest Entry Deadline",
       "PLUGIN" : "reaction rule",
+      "OWNER" : "rules",
       "TAGS" : [ "imagex_contest" ],
       "REQUIRES" : [ "rules", "rules_scheduler" ],
-      "ON" : [ "node_insert", "node_update" ],
+      "ON" : { "node_insert" : [], "node_update" : [] },
       "IF" : [
         { "node_is_of_type" : { "node" : [ "node" ], "type" : { "value" : { "contest" : "contest" } } } },
         { "NOT data_is_empty" : { "data" : [ "node:field-contest-entry-deadline" ] } },
@@ -226,9 +231,10 @@ function imagex_contest_default_rules_configuration() {
   $items['rules_imagex_contest_entry_deadline_remove_schedule'] = entity_import('rules_config', '{ "rules_imagex_contest_entry_deadline_remove_schedule" : {
       "LABEL" : "ImageX Contest Entry Deadline Remove Schedule",
       "PLUGIN" : "reaction rule",
+      "OWNER" : "rules",
       "TAGS" : [ "imagex_contest" ],
       "REQUIRES" : [ "rules", "rules_scheduler" ],
-      "ON" : [ "node_insert", "node_update", "node_delete" ],
+      "ON" : { "node_insert" : [], "node_update" : [], "node_delete" : [] },
       "IF" : [
         { "node_is_of_type" : { "node" : [ "node" ], "type" : { "value" : { "contest" : "contest" } } } },
         { "data_is_empty" : { "data" : [ "node:field-contest-entry-open" ] } }
@@ -245,9 +251,10 @@ function imagex_contest_default_rules_configuration() {
   $items['rules_imagex_contest_voting_deadline'] = entity_import('rules_config', '{ "rules_imagex_contest_voting_deadline" : {
       "LABEL" : "ImageX Contest Voting Deadline",
       "PLUGIN" : "reaction rule",
+      "OWNER" : "rules",
       "TAGS" : [ "imagex_contest" ],
       "REQUIRES" : [ "rules", "rules_scheduler" ],
-      "ON" : [ "node_insert", "node_update" ],
+      "ON" : { "node_insert" : [], "node_update" : [] },
       "IF" : [
         { "node_is_of_type" : { "node" : [ "node" ], "type" : { "value" : { "contest" : "contest" } } } },
         { "NOT data_is_empty" : { "data" : [ "node:field-contest-voting-deadline" ] } },
@@ -267,9 +274,10 @@ function imagex_contest_default_rules_configuration() {
   $items['rules_imagex_contest_voting_deadline_remove_schedule'] = entity_import('rules_config', '{ "rules_imagex_contest_voting_deadline_remove_schedule" : {
       "LABEL" : "ImageX Contest Voting Deadline Remove Schedule",
       "PLUGIN" : "reaction rule",
+      "OWNER" : "rules",
       "TAGS" : [ "imagex_contest" ],
       "REQUIRES" : [ "rules", "rules_scheduler" ],
-      "ON" : [ "node_insert", "node_update", "node_delete" ],
+      "ON" : { "node_insert" : [], "node_update" : [], "node_delete" : [] },
       "IF" : [
         { "node_is_of_type" : { "node" : [ "node" ], "type" : { "value" : { "contest" : "contest" } } } },
         { "data_is_empty" : { "data" : [ "node:field-contest-voting-open" ] } }

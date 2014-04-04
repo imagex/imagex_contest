@@ -100,10 +100,11 @@ function imagex_contest_default_page_manager_pages() {
   );
   $display->cache = array();
   $display->title = '';
+  $display->uuid = 'b43c745a-230c-4c88-9f7d-bf0df0b16a58';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-1';
+    $pane->pid = 'new-bc23bd6b-e52e-4c6f-8529-c93c73102bba';
     $pane->panel = 'one_main';
     $pane->type = 'views_panes';
     $pane->subtype = 'imagex_contest_entries_admin-panel_pane_1';
@@ -145,8 +146,9 @@ function imagex_contest_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-1'] = $pane;
-    $display->panels['one_main'][0] = 'new-1';
+    $pane->uuid = 'bc23bd6b-e52e-4c6f-8529-c93c73102bba';
+    $display->content['new-bc23bd6b-e52e-4c6f-8529-c93c73102bba'] = $pane;
+    $display->panels['one_main'][0] = 'new-bc23bd6b-e52e-4c6f-8529-c93c73102bba';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
