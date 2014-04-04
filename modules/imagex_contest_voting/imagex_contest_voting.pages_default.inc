@@ -15,7 +15,7 @@ function imagex_contest_voting_default_page_manager_pages() {
   $page->task = 'page';
   $page->admin_title = 'ImageX Contest Vote';
   $page->admin_description = 'Overview of contest nodes';
-  $page->path = 'node/%node/cast-vote';
+  $page->path = 'node/%uuid_menu_links_universal_node_load/cast-vote';
   $page->access = array(
     'logic' => 'and',
     'plugins' => array(
