@@ -30,17 +30,12 @@ function imagex_contest_panelizer_defaults() {
   $panelizer->link_to_entity = TRUE;
   $panelizer->extra = array();
   $display = new panels_display();
-  $display->layout = 'three_25_50_25';
+  $display->layout = 'one_column';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
       'default' => NULL,
       'one_main' => NULL,
-      'three_25_50_25_top' => NULL,
-      'three_25_50_25_first' => NULL,
-      'three_25_50_25_second' => NULL,
-      'three_25_50_25_third' => NULL,
-      'three_25_50_25_bottom' => NULL,
     ),
   );
   $display->cache = array();
@@ -681,7 +676,7 @@ function imagex_contest_panelizer_defaults() {
   $panelizer->link_to_entity = TRUE;
   $panelizer->extra = array();
   $display = new panels_display();
-  $display->layout = 'one';
+  $display->layout = 'one_fw';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(

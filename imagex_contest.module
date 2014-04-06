@@ -246,7 +246,10 @@ function imagex_contest_contest_admin_links($node) {
   }
   else {
     // Otherwise we just get the entity id
-    $contest_node = entity_load($node->field_contest_entry_contest[LANGUAGE_NONE][0]['target_id']);
+    $contest_node = entity_load('node', array($node->field_contest_entry_contest[LANGUAGE_NONE][0]['target_id']));
+    if (!empty($contest_node)) {
+      $contest_node = array_shift($contest_node);
+    }
   }
   $contest_entry_node = $node;
   
@@ -314,7 +317,11 @@ function imagex_contest_contest_admin_links($node) {
  */
 function imagex_contest_contest_admin_access($contest_node, $contest_entry_node, $status =  '') {
   global $user;
-  if (($user->uid == $contest_node->uid && (user_access('create contest_entry content')  || user_access('administer nodes'))) || user_access('administer nodes')) {
+  if (is_array($contest_node)) {
+    $contest_node = array_shift($contest_node);
+  }
+  if (($user->uid == $contest_node->uid && (user_access('create contest_entry content')  ||
+        user_access('administer nodes'))) || user_access('administer nodes')) {
     return TRUE;
   }
   return FALSE;
