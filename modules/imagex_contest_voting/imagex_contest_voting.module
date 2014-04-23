@@ -122,7 +122,10 @@ function imagex_contest_voting_user_vote_access($node) {
     }
     else {
       // Otherwise we just get the entity id
-      $contest_node = entity_load($node->field_contest_entry_contest[LANGUAGE_NONE][0]['target_id']);
+      $contest_node = entity_load('node', array($node->field_contest_entry_contest[LANGUAGE_NONE][0]['target_id']));
+      if (!empty($contest_node)) {
+        $contest_node = array_shift($contest_node);
+      }
     }
     $vote_link_title = t('Cast your vote for this entry now!');
     $vote_link_contest_nid = $contest_node->nid;
