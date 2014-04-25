@@ -52,7 +52,7 @@ function imagex_contest_form_contest_entry_node_form_alter(&$form, &$form_state,
   // Attach contest rules/terms checkbox on new entries
   if (empty($node->nid)) {
     $contest_rules = '';
-    if ($_GET['field_contest_entry_contest']) {
+    if (!empty($_GET['field_contest_entry_contest'])) {
       if ($contest = node_load($_GET['field_contest_entry_contest'])) {
         $contest_wrapper = entity_metadata_wrapper('node', $contest);
         $contest_rules = $contest_wrapper->field_contest_rules->value(array('sanitize' => TRUE));
