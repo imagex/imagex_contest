@@ -3,7 +3,9 @@
  * @file
  * Code for the Imagex Contest feature.
  */
-
+define('IMAGEX_CONTEST_FINALIST', 1);
+define('IMAGEX_CONTEST_WINNER', 2);
+ 
 include_once 'imagex_contest.features.inc';
 
 /**
@@ -201,7 +203,7 @@ function imagex_contest_contest_entry_links($node) {
 
   // Contest is no longer open for voting
   $node_wrapper = entity_metadata_wrapper('node', $node);  
-  if (!empty($node_wrapper->field_contest_entry_open)) {
+  if (!empty($node_wrapper->field_contest_voting_open) && imagex_contest_contest_has_entries($node)) {
     $content_open_voting = $node_wrapper->field_contest_voting_open->value();
     $content_open_entry = $node_wrapper->field_contest_entry_open->value();
     if (empty($content_open_voting) && empty($content_open_entry)) {
@@ -374,4 +376,47 @@ function imagex_contest_contest_admin_form_submit($form, &$form_state) {
   
   // Invoke rules
   $rule = rules_invoke_component($rules_set, $contest_entry_node, $entry_author_notify);
+}
+
+/**
+ * Checks if given contest has any entries
+ *
+ * @param $contest_node
+ *  Related contest node object or string containing nid
+ * @param $statuses
+ *  Array, status of entries to check against ie. finalist or winner
+ */
+function imagex_contest_contest_has_entries($contest_node, $statuses = array(IMAGEX_CONTEST_FINALIST)) {
+  // Check if the View returns results
+  $view_name = 'imagex_contest_entries';
+  $args = array();
+  
+  // Add nid as argument
+  if (is_object($contest_node)) {
+    if (!empty($contest_node->nid)) {
+      $args = array($contest_node->nid);
+    }
+  }
+  else {
+    $args = array($contest_node);
+  }
+  
+  // Status of enrties
+  if (!empty($statuses)) {
+    $args[] = implode(', ', $statuses);
+  }
+
+  // views_get_view_result give errors so execute view direct
+  $view = views_get_view($view_name);
+  if (is_object($view)) {
+    if (is_array($args)) {
+      $view->set_arguments($args);
+    }
+    $view->init_display();
+    $view->pre_execute();
+    $view->execute();
+    return $view->result;
+  }
+
+  return FALSE; 
 }
