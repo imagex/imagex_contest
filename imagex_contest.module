@@ -9,6 +9,15 @@ define('IMAGEX_CONTEST_WINNER', 2);
 include_once 'imagex_contest.features.inc';
 
 /**
+ * Implements hook_ctools_plugin_directory().
+ */
+function imagex_contest_ctools_plugin_directory($owner, $plugin_type) {
+  if ($owner == 'ctools' && $plugin_type == 'access') {
+    return 'plugins/' . $plugin_type;
+  }
+}
+
+/**
  * Implements hook_menu().
  */
 function imagex_contest_menu() {
@@ -388,8 +397,9 @@ function imagex_contest_contest_admin_form_submit($form, &$form_state) {
  */
 function imagex_contest_contest_has_entries($contest_node, $statuses = array(IMAGEX_CONTEST_FINALIST)) {
   // Check if the View returns results
-  $view_name = 'imagex_contest_entries';
+  $view_name = 'imagex_contest_entries_callback'; // lightweight version of imagex_contest_entries
   $args = array();
+  $result = '';
   
   // Add nid as argument
   if (is_object($contest_node)) {
@@ -413,9 +423,13 @@ function imagex_contest_contest_has_entries($contest_node, $statuses = array(IMA
       $view->set_arguments($args);
     }
     $view->init_display();
-    $view->pre_execute();
+    $view->pre_execute($args);
     $view->execute();
-    return $view->result;
+    $result =  $view->result;
+  }
+
+  if (!empty($result)) {
+    return TRUE;
   }
 
   return FALSE; 

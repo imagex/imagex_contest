@@ -52,7 +52,15 @@ function imagex_contest_voting_default_page_manager_pages() {
         'context' => 'argument_entity_id:node_1',
         'not' => FALSE,
       ),
+      3 => array(
+        'name' => 'contest_has_entries_access',
+        'settings' => NULL,
+        'context' => 'argument_entity_uuid:node_1',
+        'not' => FALSE,
+      ),
     ),
+    'settings' => NULL,
+    'type' => 'none',
   );
   $page->menu = array(
     'type' => 'tab',
@@ -67,10 +75,10 @@ function imagex_contest_voting_default_page_manager_pages() {
     ),
   );
   $page->arguments = array(
-    'node' => array(
+    'uuid_menu_links_universal_node_load' => array(
       'id' => 1,
-      'identifier' => 'Node: ID',
-      'name' => 'entity_id:node',
+      'identifier' => 'Node: UUID',
+      'name' => 'entity_uuid:node',
       'settings' => array(),
     ),
   );
@@ -115,10 +123,11 @@ function imagex_contest_voting_default_page_manager_pages() {
   );
   $display->cache = array();
   $display->title = 'Vote Now';
+  $display->uuid = 'b70505d7-7401-4548-b253-a1c9ba55af26';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-1';
+    $pane->pid = 'new-7bc84399-6914-4e62-a758-87ce56b17f1d';
     $pane->panel = 'one_main';
     $pane->type = 'views_panes';
     $pane->subtype = 'imagex_contest_entry_voting-panel_pane_2';
@@ -128,6 +137,12 @@ function imagex_contest_voting_default_page_manager_pages() {
       'context' => array(
         0 => 'argument_entity_id:node_1',
       ),
+      'arguments' => array(
+        'field_contest_entry_contest_target_id' => '%uuid_menu_links_universal_node_load:nid',
+      ),
+      'view_settings' => 'fields',
+      'header_type' => 'none',
+      'view_mode' => 'teaser',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -140,10 +155,11 @@ function imagex_contest_voting_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-1'] = $pane;
-    $display->panels['one_main'][0] = 'new-1';
+    $pane->uuid = '7bc84399-6914-4e62-a758-87ce56b17f1d';
+    $display->content['new-7bc84399-6914-4e62-a758-87ce56b17f1d'] = $pane;
+    $display->panels['one_main'][0] = 'new-7bc84399-6914-4e62-a758-87ce56b17f1d';
     $pane = new stdClass();
-    $pane->pid = 'new-2';
+    $pane->pid = 'new-3f30f04e-79a3-4494-8062-bd7fe800b0b5';
     $pane->panel = 'one_main';
     $pane->type = 'views_panes';
     $pane->subtype = 'imagex_contest_entry_voting-panel_pane_1';
@@ -159,27 +175,28 @@ function imagex_contest_voting_default_page_manager_pages() {
         'title' => 1,
         'name' => 1,
         'value' => 1,
-        'tag' => 1,
-      ),
-      'context' => array(
-        0 => 'argument_entity_id:node_1',
       ),
       'override_title' => 1,
       'override_title_text' => 'Cast Your Vote Now',
+      'arguments' => array(
+        'field_contest_entry_contest_target_id' => '%uuid_menu_links_universal_node_load:nid',
+      ),
+      'view_settings' => 'fields',
+      'header_type' => 'none',
+      'view_mode' => 'teaser',
+      'widget_title' => '',
     );
     $pane->cache = array();
     $pane->style = array(
       'settings' => NULL,
     );
-    $pane->css = array(
-      'css_id' => '',
-      'css_class' => 'standard-bean standard-bean-full',
-    );
+    $pane->css = '';
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-2'] = $pane;
-    $display->panels['one_main'][1] = 'new-2';
+    $pane->uuid = '3f30f04e-79a3-4494-8062-bd7fe800b0b5';
+    $display->content['new-3f30f04e-79a3-4494-8062-bd7fe800b0b5'] = $pane;
+    $display->panels['one_main'][1] = 'new-3f30f04e-79a3-4494-8062-bd7fe800b0b5';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
