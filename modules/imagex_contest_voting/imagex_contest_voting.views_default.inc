@@ -390,12 +390,12 @@ function imagex_contest_voting_views_default_views() {
   $handler->display->display_options['allow']['fields_override'] = 'fields_override';
   $handler->display->display_options['argument_input'] = array(
     'field_contest_entry_contest_target_id' => array(
-      'type' => 'context',
+      'type' => 'user',
       'context' => 'entity:node.nid',
       'context_optional' => 0,
       'panel' => '0',
       'fixed' => '',
-      'label' => 'Content: Related Contest (field_contest_entry_contest)',
+      'label' => 'Content: Related Contest NID',
     ),
   );
 
@@ -472,12 +472,12 @@ function imagex_contest_voting_views_default_views() {
   $handler->display->display_options['pane_category']['weight'] = '0';
   $handler->display->display_options['argument_input'] = array(
     'field_contest_entry_contest_target_id' => array(
-      'type' => 'context',
+      'type' => 'user',
       'context' => 'entity:node.nid',
       'context_optional' => 0,
       'panel' => '0',
       'fixed' => '',
-      'label' => 'Content: Related Contest (field_contest_entry_contest)',
+      'label' => 'Content: Related Contest NID',
     ),
   );
   $export['imagex_contest_entry_voting'] = $view;

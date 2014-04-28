@@ -15,7 +15,7 @@ function imagex_contest_default_page_manager_pages() {
   $page->task = 'page';
   $page->admin_title = 'ImageX Contest Overview';
   $page->admin_description = 'Overview of contest nodes';
-  $page->path = 'node/%node/contest';
+  $page->path = 'node/%uuid_menu_links_universal_node_load/contest';
   $page->access = array(
     'logic' => 'and',
     'plugins' => array(
@@ -52,10 +52,10 @@ function imagex_contest_default_page_manager_pages() {
     ),
   );
   $page->arguments = array(
-    'node' => array(
+    'uuid_menu_links_universal_node_load' => array(
       'id' => 1,
-      'identifier' => 'Node: ID',
-      'name' => 'entity_id:node',
+      'identifier' => 'Node: UUID',
+      'name' => 'entity_uuid:node',
       'settings' => array(),
     ),
   );
@@ -114,7 +114,7 @@ function imagex_contest_default_page_manager_pages() {
       'use_pager' => 1,
       'pager_id' => '0',
       'items_per_page' => '30',
-      'path' => 'node/%node:nid/contest',
+      'path' => 'node/%uuid_menu_links_universal_node_load:nid/contest',
       'fields_override' => array(
         'views_bulk_operations' => 1,
         'title' => 1,
@@ -134,6 +134,13 @@ function imagex_contest_default_page_manager_pages() {
       ),
       'override_title' => 1,
       'override_title_text' => 'Contest Entries',
+      'arguments' => array(
+        'field_contest_entry_contest_target_id' => '%uuid_menu_links_universal_node_load:nid',
+      ),
+      'view_settings' => 'fields',
+      'header_type' => 'none',
+      'view_mode' => 'teaser',
+      'widget_title' => '',
     );
     $pane->cache = array();
     $pane->style = array(

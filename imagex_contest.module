@@ -3,8 +3,19 @@
  * @file
  * Code for the Imagex Contest feature.
  */
-
+define('IMAGEX_CONTEST_FINALIST', 1);
+define('IMAGEX_CONTEST_WINNER', 2);
+ 
 include_once 'imagex_contest.features.inc';
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function imagex_contest_ctools_plugin_directory($owner, $plugin_type) {
+  if ($owner == 'ctools' && $plugin_type == 'access') {
+    return 'plugins/' . $plugin_type;
+  }
+}
 
 /**
  * Implements hook_menu().
@@ -52,7 +63,7 @@ function imagex_contest_form_contest_entry_node_form_alter(&$form, &$form_state,
   // Attach contest rules/terms checkbox on new entries
   if (empty($node->nid)) {
     $contest_rules = '';
-    if ($_GET['field_contest_entry_contest']) {
+    if (!empty($_GET['field_contest_entry_contest'])) {
       if ($contest = node_load($_GET['field_contest_entry_contest'])) {
         $contest_wrapper = entity_metadata_wrapper('node', $contest);
         $contest_rules = $contest_wrapper->field_contest_rules->value(array('sanitize' => TRUE));
@@ -201,9 +212,10 @@ function imagex_contest_contest_entry_links($node) {
 
   // Contest is no longer open for voting
   $node_wrapper = entity_metadata_wrapper('node', $node);  
-  if (!empty($node_wrapper->field_contest_entry_open)) {
+  if (!empty($node_wrapper->field_contest_voting_open) && imagex_contest_contest_has_entries($node)) {
     $content_open_voting = $node_wrapper->field_contest_voting_open->value();
-    if (empty($content_open_voting)) {
+    $content_open_entry = $node_wrapper->field_contest_entry_open->value();
+    if (empty($content_open_voting) && empty($content_open_entry)) {
       $links['imagex_contest_add_vote_noaccess'] = array(
         'title' => t('This contest is no longer open to voting.'),
         'html' => TRUE,
@@ -373,4 +385,52 @@ function imagex_contest_contest_admin_form_submit($form, &$form_state) {
   
   // Invoke rules
   $rule = rules_invoke_component($rules_set, $contest_entry_node, $entry_author_notify);
+}
+
+/**
+ * Checks if given contest has any entries
+ *
+ * @param $contest_node
+ *  Related contest node object or string containing nid
+ * @param $statuses
+ *  Array, status of entries to check against ie. finalist or winner
+ */
+function imagex_contest_contest_has_entries($contest_node, $statuses = array(IMAGEX_CONTEST_FINALIST)) {
+  // Check if the View returns results
+  $view_name = 'imagex_contest_entries_callback'; // lightweight version of imagex_contest_entries
+  $args = array();
+  $result = '';
+  
+  // Add nid as argument
+  if (is_object($contest_node)) {
+    if (!empty($contest_node->nid)) {
+      $args = array($contest_node->nid);
+    }
+  }
+  else {
+    $args = array($contest_node);
+  }
+  
+  // Status of enrties
+  if (!empty($statuses)) {
+    $args[] = implode(', ', $statuses);
+  }
+
+  // views_get_view_result give errors so execute view direct
+  $view = views_get_view($view_name);
+  if (is_object($view)) {
+    if (is_array($args)) {
+      $view->set_arguments($args);
+    }
+    $view->init_display();
+    $view->pre_execute($args);
+    $view->execute();
+    $result =  $view->result;
+  }
+
+  if (!empty($result)) {
+    return TRUE;
+  }
+
+  return FALSE; 
 }

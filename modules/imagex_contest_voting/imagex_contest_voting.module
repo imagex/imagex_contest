@@ -133,7 +133,7 @@ function imagex_contest_voting_user_vote_access($node) {
   }
   
   // If no node loaded (shouldn't happen) deny access
-  if (empty($contest_node)) {
+  if (empty($contest_node) || !imagex_contest_contest_has_entries($contest_node)) {
     return FALSE;
   }
   

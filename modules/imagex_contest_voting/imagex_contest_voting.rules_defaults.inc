@@ -12,6 +12,7 @@ function imagex_contest_voting_default_rules_configuration() {
   $items['rules_imagex_contest_entry_vote_single'] = entity_import('rules_config', '{ "rules_imagex_contest_entry_vote_single" : {
       "LABEL" : "ImageX Contest Entry Vote Single",
       "PLUGIN" : "rule set",
+      "OWNER" : "rules",
       "TAGS" : [ "imagex_contest" ],
       "REQUIRES" : [ "rules", "imagex_contest_voting" ],
       "ACCESS_EXPOSED" : "1",
