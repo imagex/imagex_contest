@@ -203,7 +203,8 @@ function imagex_contest_contest_entry_links($node) {
   $node_wrapper = entity_metadata_wrapper('node', $node);  
   if (!empty($node_wrapper->field_contest_entry_open)) {
     $content_open_voting = $node_wrapper->field_contest_voting_open->value();
-    if (empty($content_open_voting)) {
+    $content_open_entry = $node_wrapper->field_contest_entry_open->value();
+    if (empty($content_open_voting) && empty($content_open_entry)) {
       $links['imagex_contest_add_vote_noaccess'] = array(
         'title' => t('This contest is no longer open to voting.'),
         'html' => TRUE,

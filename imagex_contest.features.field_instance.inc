@@ -100,12 +100,9 @@ function imagex_contest_field_default_field_instances() {
       ),
       'teaser' => array(
         'label' => 'hidden',
-        'module' => 'text',
-        'settings' => array(
-          'trim_length' => 600,
-        ),
-        'type' => 'text_summary_or_trimmed',
-        'weight' => 0,
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 3,
       ),
     ),
     'entity_type' => 'node',
@@ -174,7 +171,6 @@ If a deadline date is entered the "Open To Entries" checkbox will automatically 
           'multiple_from' => '',
           'multiple_number' => '',
           'multiple_to' => '',
-          'show_repeat_rule' => 'show',
         ),
         'type' => 'date_default',
         'weight' => 3,
@@ -189,7 +185,7 @@ If a deadline date is entered the "Open To Entries" checkbox will automatically 
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 8,
       ),
     ),
     'entity_type' => 'node',
@@ -197,7 +193,7 @@ If a deadline date is entered the "Open To Entries" checkbox will automatically 
     'label' => 'Entry Deadline',
     'required' => 0,
     'settings' => array(
-      'default_value' => 'now',
+      'default_value' => 'blank',
       'default_value2' => 'same',
       'default_value_code' => '',
       'default_value_code2' => '',
@@ -212,7 +208,6 @@ If a deadline date is entered the "Open To Entries" checkbox will automatically 
         'input_format' => 'Y-m-d H:i:s',
         'input_format_custom' => '',
         'label_position' => 'above',
-        'repeat_collapsed' => 0,
         'text_parts' => array(),
         'year_range' => '-0:+10',
       ),
@@ -249,7 +244,7 @@ If a deadline date is entered the "Open To Entries" checkbox will automatically 
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 10,
       ),
     ),
     'entity_type' => 'node',
@@ -295,7 +290,7 @@ If a deadline date is entered the "Open To Entries" checkbox will automatically 
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 9,
       ),
     ),
     'entity_type' => 'node',
@@ -369,7 +364,7 @@ If a deadline date is entered the "Open To Entries" checkbox will automatically 
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 12,
       ),
     ),
     'entity_type' => 'node',
@@ -451,7 +446,7 @@ If a deadline date is entered the "Open For Voting" checkbox will automatically 
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 13,
       ),
     ),
     'entity_type' => 'node',
@@ -459,7 +454,7 @@ If a deadline date is entered the "Open For Voting" checkbox will automatically 
     'label' => 'Voting Deadline',
     'required' => 0,
     'settings' => array(
-      'default_value' => 'now',
+      'default_value' => 'blank',
       'default_value2' => 'same',
       'default_value_code' => '',
       'default_value_code2' => '',
@@ -474,7 +469,6 @@ If a deadline date is entered the "Open For Voting" checkbox will automatically 
         'input_format' => 'Y-m-d H:i:s',
         'input_format_custom' => '',
         'label_position' => 'above',
-        'repeat_collapsed' => 0,
         'text_parts' => array(),
         'year_range' => '-0:+3',
       ),
@@ -511,7 +505,7 @@ If a deadline date is entered the "Open For Voting" checkbox will automatically 
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 14,
       ),
     ),
     'entity_type' => 'node',
@@ -530,55 +524,6 @@ If a deadline date is entered the "Open For Voting" checkbox will automatically 
       ),
       'type' => 'options_onoff',
       'weight' => 6,
-    ),
-    'workbench_access_field' => 0,
-  );
-
-  // Exported field_instance: 'node-contest-field_radioactivity'
-  $field_instances['node-contest-field_radioactivity'] = array(
-    'bundle' => 'contest',
-    'default_value' => array(
-      0 => array(
-        'radioactivity_energy' => 0,
-        'radioactivity_timestamp' => 1396461593,
-      ),
-    ),
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'radioactivity',
-        'settings' => array(
-          'accuracy' => 100,
-          'energy' => 10,
-          'type' => 'none',
-        ),
-        'type' => 'radioactivity_combo_formatter',
-        'weight' => 9,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_radioactivity',
-    'label' => 'Radioactivity',
-    'required' => FALSE,
-    'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'profile' => 'medium_traffic',
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 0,
-      'module' => 'radioactivity',
-      'settings' => array(),
-      'type' => 'radioactivity_basic_widget',
-      'weight' => 8,
     ),
     'workbench_access_field' => 0,
   );
@@ -840,101 +785,6 @@ If a deadline date is entered the "Open For Voting" checkbox will automatically 
     'workbench_access_field' => 0,
   );
 
-  // Exported field_instance: 'node-contest_entry-field_finalist'
-  $field_instances['node-contest_entry-field_finalist'] = array(
-    'bundle' => 'contest_entry',
-    'default_value' => array(
-      0 => array(
-        'value' => 0,
-      ),
-    ),
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'list',
-        'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 5,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'ds_extras_field_template' => '',
-    'entity_type' => 'node',
-    'field_name' => 'field_finalist',
-    'label' => 'Finalist',
-    'required' => 0,
-    'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(
-        'display_label' => 0,
-      ),
-      'type' => 'options_onoff',
-      'weight' => 10,
-    ),
-    'workbench_access_field' => 0,
-  );
-
-  // Exported field_instance: 'node-contest_entry-field_radioactivity'
-  $field_instances['node-contest_entry-field_radioactivity'] = array(
-    'bundle' => 'contest_entry',
-    'default_value' => array(
-      0 => array(
-        'radioactivity_energy' => 0,
-        'radioactivity_timestamp' => 1396463810,
-      ),
-    ),
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'radioactivity',
-        'settings' => array(
-          'accuracy' => 100,
-          'energy' => 10,
-          'type' => 'none',
-        ),
-        'type' => 'radioactivity_combo_formatter',
-        'weight' => 4,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_radioactivity',
-    'label' => 'Radioactivity',
-    'required' => FALSE,
-    'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'profile' => 'medium_traffic',
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 0,
-      'module' => 'radioactivity',
-      'settings' => array(),
-      'type' => 'radioactivity_basic_widget',
-      'weight' => 5,
-    ),
-    'workbench_access_field' => 0,
-  );
-
   // Translatables
   // Included for use with string extractors like potx.
   t('A brief description or summary of your entry. ');
@@ -944,11 +794,9 @@ If a deadline date is entered the "Open For Voting" checkbox will automatically 
   t('Determines if users can submit entries to this contest.');
   t('Determines if users can vote on entries in this contest. Voting widgets will only show when this field is checked and "finalist" entries have been selected.');
   t('Entry Deadline');
-  t('Finalist');
   t('Media');
   t('Open For Entries');
   t('Open For Voting');
-  t('Radioactivity');
   t('Related Contest');
   t('Rules');
   t('Status');
